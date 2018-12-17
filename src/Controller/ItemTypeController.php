@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ItemType;
 use App\Form\ItemTypeType;
 use App\Repository\ItemTypeRepository;
+use App\Upload\FileItemTypeUpload;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,13 +28,16 @@ class ItemTypeController extends AbstractController
     /**
      * @Route("/new", name="item_type_new", methods="GET|POST")
      */
-    public function new(Request $requeste): Response
+    public function new(Request $request, FileItemTypeUpload $fileItemTypeUpload): Response
     {
         $itemType = new ItemType();
         $form = $this->createForm(ItemTypeType::class, $itemType);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $fileItemTypeUpload->upload($itemType);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($itemType);
             $em->flush();
@@ -60,12 +64,16 @@ class ItemTypeController extends AbstractController
     /**
      * @Route("/{id}/edit", name="item_type_edit", methods="GET|POST")
      */
-    public function edit(Request $request, ItemType $itemType): Response
+    public function edit(Request $request, ItemType $itemType, FileItemTypeUpload $fileItemTypeUpload): Response
     {
         $form = $this->createForm(ItemTypeType::class, $itemType);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $fileItemTypeUpload->upload($itemType);
+            //dump($itemType->getPicture());die('rerererere');
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('item_type_index', ['id' => $itemType->getId()]);
@@ -80,12 +88,15 @@ class ItemTypeController extends AbstractController
     /**
      * @Route("/{id}", name="item_type_delete", methods="DELETE")
      */
-    public function delete(Request $request, ItemType $itemType): Response
+    public function delete(Request $request, ItemType $itemType, FileItemTypeUpload $fileItemTypeUpload): Response
     {
         if ($this->isCsrfTokenValid('delete'.$itemType->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($itemType);
-            $em->flush();
+
+            if($fileItemTypeUpload->removeFile($itemType) === true){
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($itemType);
+                $em->flush();
+            }
         }
 
         return $this->redirectToRoute('item_type_index');

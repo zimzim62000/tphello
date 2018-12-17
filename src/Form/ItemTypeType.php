@@ -6,6 +6,7 @@ use App\Entity\ItemType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ItemTypeType extends AbstractType
 {
@@ -14,6 +15,7 @@ class ItemTypeType extends AbstractType
         $builder
             ->add('name')
             ->add('weight')
+            ->add('pictureFile', FileType::class, array('label' => 'Image'))
         ;
     }
 

@@ -27,3 +27,5 @@ yarn-error.log
 /.env
 /composer.phar
 /.idea
+/public/itemtype/*
+/public/itemtype/.gitkeep

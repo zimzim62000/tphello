@@ -19,6 +19,12 @@
                 <th>Weight</th>
                 <td>{{ item_type.weight }}</td>
             </tr>
+            {% if item_type.picture is defined %}
+            <tr>
+                <th>Picture</th>
+                <td><img src="{{ base_url }}{{ item_type.pictureWebPath }}" /></td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
 

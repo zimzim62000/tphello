@@ -12,3 +12,8 @@ h2{
     margin: 20px;
     border: 2PX SOLID rebeccapurple;
 }
+
+li{
+    color: chocolate;
+    font-size: 20px;
+}

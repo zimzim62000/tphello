@@ -1,0 +1,7 @@
+{% block message %}
+    {% if message is defined and message is not null %}
+        <div class="alert message">
+            <h2>{{ message }}</h2>
+        </div>
+    {% endif %}
+{% endblock message %}

@@ -4,13 +4,13 @@ namespace App\Security\Voter;
 
 use App\Security\AppAccess;
 use App\Entity\User;
-use App\Entity\ItemType;
+use App\Entity\Item;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 use Symfony\Component\Security\Core\Security;
 
-class ItemTypeVoter extends Voter
+class ItemVoter extends Voter
 {
     private $security;
 
@@ -21,11 +21,10 @@ class ItemTypeVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if ($attribute !== AppAccess::ITEM_TYPE_ACCESS ){
+        if (!in_array($attribute, [AppAccess::ITEM_SHOW, AppAccess::ITEM_EDIT, AppAccess::ITEM_DELETE])){
             return false;
         }
-
-        if (!$subject instanceof ItemType) {
+        if (!$subject instanceof Item) {
             return false;
         }
 
@@ -45,8 +44,12 @@ class ItemTypeVoter extends Voter
             return true;
         }
 
-
-        return $subject->getUser()->getId() === $user->getId();
-
+        switch ($attribute){
+            case AppAccess::ITEM_DELETE:
+            case AppAccess::ITEM_EDIT:
+            case AppAccess::ITEM_SHOW:
+                return $subject->getUser()->getId() === $user->getId();
+                break;
+        }
     }
 }

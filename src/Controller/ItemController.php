@@ -6,6 +6,7 @@ use App\Entity\Item;
 use App\Form\ItemType;
 use App\Entity\ItemType as ItemTypeEntity;
 use App\Repository\ItemRepository;
+use App\Security\AppAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,11 +18,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class ItemController extends AbstractController
 {
     /**
-     * @Route("/", name="item_index", methods="GET")
+     * @Route("/list/{message}", name="item_index", methods="GET", defaults={"message"=null})
      */
-    public function index(ItemRepository $itemRepository): Response
+    public function index(ItemRepository $itemRepository, string $message = null): Response
     {
-        return $this->render('item/index.html.twig', ['items' => $itemRepository->findAll()]);
+        return $this->render('item/index.html.twig', ['items' => $itemRepository->findAll(), 'message' => $message]);
     }
 
     /**
@@ -30,7 +31,7 @@ class ItemController extends AbstractController
     public function new(Request $request, ItemTypeEntity $itemType = null): Response
     {
         $item = new Item();
-        $form = $this->createForm(ItemType::class, $item);
+        $form = $this->createForm(ItemType::class, $item, ['itemType'=> $itemType]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -52,7 +53,11 @@ class ItemController extends AbstractController
      */
     public function show(Item $item): Response
     {
-        return $this->render('item/show.html.twig', ['item' => $item]);
+        if($this->isGranted(AppAccess::ITEM_SHOW, $item) === true){
+            return $this->render('item/show.html.twig', ['item' => $item]);
+        }else{
+            return $this->redirectToRoute('item_index', ['message' => 'Vous n\'avez pas accès à cet item']);
+        }
     }
 
     /**
@@ -60,6 +65,9 @@ class ItemController extends AbstractController
      */
     public function edit(Request $request, Item $item): Response
     {
+
+        $this->denyAccessUnlessGranted(AppAccess::ITEM_EDIT, $item);
+
         $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
 
@@ -80,6 +88,8 @@ class ItemController extends AbstractController
      */
     public function delete(Request $request, Item $item): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::ITEM_EDIT, $item);
+
         if ($this->isCsrfTokenValid('delete'.$item->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($item);
