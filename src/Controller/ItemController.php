@@ -18,11 +18,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class ItemController extends AbstractController
 {
     /**
-     * @Route("/list/{message}", name="item_index", methods="GET", defaults={"message"=null})
+     * @Route("/", name="item_index", methods="GET")
      */
-    public function index(ItemRepository $itemRepository, string $message = null): Response
+    public function index(ItemRepository $itemRepository): Response
     {
-        return $this->render('item/index.html.twig', ['items' => $itemRepository->findAll(), 'message' => $message]);
+        return $this->render('item/index.html.twig', ['items' => $itemRepository->findAll()]);
     }
 
     /**
@@ -39,7 +39,7 @@ class ItemController extends AbstractController
             $em->persist($item);
             $em->flush();
 
-            return $this->redirectToRoute('item_index');
+             return $this->redirectToRoute('item_index');
         }
 
         return $this->render('item/new.html.twig', [
@@ -56,7 +56,8 @@ class ItemController extends AbstractController
         if($this->isGranted(AppAccess::ITEM_SHOW, $item) === true){
             return $this->render('item/show.html.twig', ['item' => $item]);
         }else{
-            return $this->redirectToRoute('item_index', ['message' => 'Vous n\'avez pas accès à cet item']);
+            $this->addFlash('error', 'Vous n\'avez pas accès à cet item');
+            return $this->redirectToRoute('item_index');
         }
     }
 
@@ -65,7 +66,6 @@ class ItemController extends AbstractController
      */
     public function edit(Request $request, Item $item): Response
     {
-
         $this->denyAccessUnlessGranted(AppAccess::ITEM_EDIT, $item);
 
         $form = $this->createForm(ItemType::class, $item);
@@ -88,7 +88,7 @@ class ItemController extends AbstractController
      */
     public function delete(Request $request, Item $item): Response
     {
-        $this->denyAccessUnlessGranted(AppAccess::ITEM_EDIT, $item);
+        $this->denyAccessUnlessGranted(AppAccess::ITEM_DELETE, $item);
 
         if ($this->isCsrfTokenValid('delete'.$item->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();

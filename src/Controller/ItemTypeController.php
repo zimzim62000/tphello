@@ -72,7 +72,6 @@ class ItemTypeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $fileItemTypeUpload->upload($itemType);
-            //dump($itemType->getPicture());die('rerererere');
 
             $this->getDoctrine()->getManager()->flush();
 
