@@ -52,5 +52,3 @@ security:
         #- { path: ^/user/[0-9]/show, roles: ROLE_USER }
         #- { path: ^/user, roles: ROLE_ADMIN }
         #- { path: ^/user, roles: ROLE_USER }
-        - { path: ^/item, roles: ROLE_USER }
-        - { path: ^/itemtype, roles: ROLE_ADMIN }
