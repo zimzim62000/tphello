@@ -5,73 +5,30 @@
 {% block body %}
 
     <div class="panel">
-        <h1>10/01/2019</h1>
-        <h1>Bonne année et bon code à tous</h1>
+        <h1>Detail user</h1>
     </div>
 
     <div class="panel">
-        <h2>Avez-vous des questions sur le marathon ?</h2>
+        {% for weaponUser in weaponsUser %}
+            {% set damage = weaponUser.quality *  weaponUser.weapon.damage %}
+            <h2 {% if weaponUser.active is same as(true) %} class="active" {% endif %}>Name
+                : {{ weaponUser.weapon.name }} - Ammu : {{ weaponUser.ammunition }} - DMG :{{ damage }} <a
+                        href="{{ path('user_action_load', {'id': weaponUser.id}) }}">Load</a><a
+                        href="{{ path('user_action_reload', {'id': weaponUser.id}) }}">Reload</a></h2>
+        {% endfor %}
     </div>
+
+
     <div class="panel">
-        <h1>Mise en condition : ( petit tp blanc avec point bonus )</h1>
-        <h1>Créer une nouvelle branch TPBLANC à me rendre en pull Request sur <a href="https://github.com/zimzim62000/tphello">Ici</a> avant 11h15 sinon pas noté :)</h1>
-        <h3>
-            Pré requis 1<br />
-            Clean de item item type <br />
-            modification de User :) <br />
-            Création d'une entité : Weapon et du crud qui va avec ( name : string, damage: decimal ) " @ORM\Column(type="decimal", precision=100, scale=2)"<br />
-            Création d'une entité : WeaponUser ( weapon, user, quality : int, ammunition : int, active : bool)<br />
-            Création de fixture de weapon ( minimun 5 et de user min 3 ).<br />
-        </h3>
-        <h3>
-            Pré requis 2<br />
-            Créer un Controller qui gère les actions de l'utilisateur<br />
-            Créer une page pour gerer les actions de l'utilisateur<br />
-            Lister les armes, le type, les munitions ...</br>
-            Aprés login redirection sur cette page.<br />
-            <span class="pt">0.5pt</span> :) c'est cadeau
-        </h3>
-        <h2>
-            Créer une action qui permet d'ajouter une arme à l'utilisateur connecté<br />
-            <span class="point">1 - </span>Création de WeaponUserType ( à la création : active = false,  ammunition = 100) -> <span class="pt">0.25pt</span><br />
-            <span class="point">2 - </span>Création de QualityType => ChoiceType : ['legendaire' = 5 , 'epique' = 3 , 'rare' = 2, 'commun' = 1, 'délabré = -1] -><span class="pt">0.25pt</span><br />
-            <span class="point">3 - </span>Modification de la vue de QualityType pour qu'une couleur apparaisse à côté du select 'legendaire' => 'orange', 'epique' => 'violet', 'rare' => 'bleu', 'commun' => 'blanc', 'délabré => 'gris] -> <span class="pt">0.5pt</span>
-        </h2>
-        <h2>
-            Créer une action qui permet d'équiper une arme à l'utilisateur parmis celle disponible dans son inventaire ( set WeaponUser active à true )<br />
-            <span class="point">4 - </span>Création  de WeaponsUserType => EntityType : Seulement les armes du joueur  :) gestion via la query builder -> <span class="pt">0.5pt</span>
-        </h2>
-        <h2>
-            Créer une action qui permet de recharger son arme => ammunition = 100<br />
-            <span class="point">5 - </span>Utilisation de WeaponsUserType => set amunition à 100 -> <span class="pt">0.25pt</span>
-        </h2>
-        <h2>
-            <span class="point">6 - </span>Créer une action qui permet de tirer sur un enemy( tout autre utilisateur qui as encore des Pv ) avec l'arme active <span class="pt">0.25pt</span><br />
-            <span class="point">7 - </span>Gestion des dégats de l'utilisateur touché dans un service<span class="pt">0.5pt</span>
-        </h2>
-        <h2>
-            <span class="point">8 - </span>Toutes les actions doivent être sécurisé pour l'utilisateur connecté<span class="pt">1pt</span>
-        </h2>
-        <h2>
-            <span class="point">9 - </span>Ajout de callback sur chaque action pour informer l'utilisateur du résultat de l'action <span class="pt">0.5pt</span><br />
-            <span class="point">10 - </span>Respect des bonnes pratiques ( naming , service , ...) <span class="pt">0.5pt</span><br />
-        </h2>
-        <h4>
-            Attention toute modification d'une entité devra se faire dans le formulaire ou dans un service ! ( "vous pouvez quand même persister dans le controler" ) <br />
-            <strong>En Clair le minimun possible dans le controller :)</strong>
-        </h4>
+        {% for user in users %}
+            <h2 {% if user.health is same as(constant('App\\Entity\\User::HEALT')) %} class="active" {% endif %}>Name
+                : {{ user.email }} - <span class="point">{{ user.health }}PV</span><a
+                        href="{{ path('user_action_shoot', {'id': user.id}) }}">Shoot</a></h2>
+        {% endfor %}
     </div>
 
     <div class="panel">
-
-        <h1>Créer une nouvelle branch TP3</h1>
-        <h2>Création de ma premiere commande</h2>
-        <h3><a href="https://symfony.com/doc/current/console.html" target="_blank">Plus d'info</a></h3>
-        <code>
-            php bin/console app:happy<br />
-            php bin/console app:happy -h<br />
-            php bin/console app:happy 2019<br />
-        </code>
-        <h2>Créer une commande qui créer un utilisateur</h2>
+        <a href="{{ path('weapon_user_new') }}">Ajouter une arme</a>
     </div>
+
 {% endblock %}

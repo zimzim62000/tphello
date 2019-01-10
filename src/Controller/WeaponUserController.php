@@ -37,7 +37,12 @@ class WeaponUserController extends AbstractController
             $em->persist($weaponUser);
             $em->flush();
 
-            return $this->redirectToRoute('weapon_user_index');
+            if($this->isGranted('ROLE_ADMIN') === true){
+                return $this->redirectToRoute('weapon_user_index');
+            }else{
+                $this->addFlash('success', 'Arme ajouté avec succes');
+                return $this->redirectToRoute('user_action_index');
+            }
         }
 
         return $this->render('weapon_user/new.html.twig', [

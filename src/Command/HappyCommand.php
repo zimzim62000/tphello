@@ -31,6 +31,7 @@ class HappyCommand extends Command{
             ->setDescription('Command for take a good start :)')
             ->setHelp('Say happy new year')
             ->addArgument('year', InputArgument::REQUIRED, 'What is the new year ?')
+            ->addArgument('noel', InputArgument::OPTIONAL, 'Merry Christmass', false)
         ;
     }
 
@@ -51,6 +52,10 @@ class HappyCommand extends Command{
         $question->setMaxAttempts(5);
         $name = $helper->ask($input, $output, $question);
         $output->writeln('--------------------');
-        $output->writeln('Hello ' . $name .', LPDIOCS2 wish you a Happy new Year ' .  $input->getArgument('year'));
+        $noel =  "";
+        if($input->getArgument('noel') !== false){
+            $noel = ' and a Merry Christmass';
+        }
+        $output->writeln('Hello ' . $name .', LPDIOCS2 wish you a Happy new Year ' .  $input->getArgument('year') . $noel);
     }
 }

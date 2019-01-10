@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class WeaponUser
 {
+    const MAX_AMMU = 100;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
