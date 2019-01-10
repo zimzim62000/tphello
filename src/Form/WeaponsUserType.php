@@ -28,12 +28,14 @@ class WeaponsUserType extends AbstractType
 //passer le service utilisateur et aller chercher que les armes
     public function configureOptions(OptionsResolver $resolver)
     {
+
         $resolver->setDefaults([
-            'query_builder' => function (WeaponUserRepository $repo) use ( $token )
-            return $repo -> where 'user' = $token
+         'query_builder' => function (WeaponUserRepository $wur) use ($token) {
+                return $wur->createQueryBuilder('wu')
+                    ->where('wu.user =  :user')
+                    ->setParameter('user', $this->token->getToken()->getUser());
+            },
 
-
-            ],
             'multiple' => false,
             'expanded' => true,
         ]);
