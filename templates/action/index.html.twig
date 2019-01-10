@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Centre des actions{% endblock %}
+
+{% block body %}
+
+    <h1>Bienvenue {{ user.firstName }} dans le centre d'action !✅</h1>
+    <div class="row">
+        <div class="col-sm">
+            <h2>Vos armes <a href="{{ path("action_activer_arme") }}" class="btn btn-primary"> activer une arme</a></h2>
+
+            {% for activeWeap in weaponUser %}
+                <ul>
+                    <li>{{ activeWeap.weapon.name }}
+                        <ul>
+                            <li>Damage: {{ activeWeap.weapon.damage }}</li>
+                            <li>Quality: {{ activeWeap.quality }}</li>
+                            <li>Ammunition: {{ activeWeap.ammunition }}</li>
+                            <li>Active: {{ activeWeap.active ? 'yes' : 'no' }}</li>
+                        </ul>
+                    </li>
+                </ul>
+            {% endfor %}
+        </div>
+        <div class="col-sm">
+            <h2>Les utilisateurs à attaquer</h2>
+            {% for us in users %}
+                <ul>
+                    <li>{{ us.firstName ~ " " ~ us.lastName }}
+                    </li>
+                </ul>
+            {% endfor %}
+        </div>
+        <div class="col-sm">
+            <h2>Les armes disponible IG <a href="{{ path("action_ajouter_arme") }}" class="btn btn-primary"> Ramasser une arme</a></h2>
+            {% for weap in weapons %}
+                <ul>
+                    <li>{{ weap.name ~ "(" ~ weap.damage ~ " dmg)" }}
+                    </li>
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
