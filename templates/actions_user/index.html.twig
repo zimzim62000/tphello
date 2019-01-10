@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actions User{% endblock %}
+
+{% block body %}
+
+
+{% for weaponU in weapon_user %}
+    <tr>
+        <td>{{ weaponU.id }}</td>
+        <td>{{ weaponU.weapon.name }}</td>
+        <td>{{ weaponU.weapon.damage }}</td>
+        <td>{{ weaponU.quality }}</td>
+        <td>{{ weaponU.ammunition }}</td>
+    </tr>
+
+{% endfor %}
+
+{% endblock %}

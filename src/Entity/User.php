@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -61,6 +63,18 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\WeaponUser", mappedBy="user")
+     */
+    private $weaponUsers;
+
+
+
+    public function __construct()
+    {
+        $this->weaponUsers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -224,6 +238,40 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|WeaponUser[]
+     */
+    public function getWeaponUsers(): Collection
+    {
+        return $this->weaponUsers;
+    }
+
+    public function addWeaponUser(WeaponUser $weaponUser): self
+    {
+        if (!$this->weaponUsers->contains($weaponUser)) {
+            $this->weaponUsers[] = $weaponUser;
+            $weaponUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWeaponUser(WeaponUser $weaponUser): self
+    {
+        if ($this->weaponUsers->contains($weaponUser)) {
+            $this->weaponUsers->removeElement($weaponUser);
+            // set the owning side to null (unless already changed)
+            if ($weaponUser->getUser() === $this) {
+                $weaponUser->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
 
 
 }
