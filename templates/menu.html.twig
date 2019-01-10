@@ -1,8 +1,7 @@
 {% block menu %}
     <a href="{{ path('home_index') }}">Home</a>
     <a href="{{ path('user_index') }}">User</a>
-    <a href="{{ path('item_index') }}">Item</a>
-    <a href="{{ path('item_type_index') }}">Item type</a>
+    <a href="{{ path('actions_index') }}">Actions</a>
 
     {% if is_granted('ROLE_USER') %}
         <a href="{{ path('app_logout') }}">Deconnexion</a>

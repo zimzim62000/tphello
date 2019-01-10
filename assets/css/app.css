@@ -7,6 +7,22 @@ h1{
 h2{
     color: blue;
 }
+h3{
+    color: black;
+}
+h4{
+    color: red;
+    font-size: 40px;
+    font-weight: 900;
+}
+span.point{
+    color: darkcyan;
+    font-size: 20px;
+}
+span.pt{
+    color: yellow;
+    font-size: 20px;
+}
 .panel{
     padding: 20px;
     margin: 20px;

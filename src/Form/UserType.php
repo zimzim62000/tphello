@@ -47,19 +47,6 @@ class UserType extends AbstractType
         $form = $event->getForm();
         $user = $event->getData();
 
-        /* @Explain Si Role Super ADMIN alors on ajoute un champ active sinon on enleve le role
-         * if($this->securityChecker->isGranted('ROLE_SUPER_ADMIN') === true){
-         * $form->add('enabled');
-         * }else{
-         * $form->remove('roles');
-         * }
-         */
-
-        if($user->getid() !== null){
-            $user->setMaxWeight(\rand(200, 500));
-        }
-
-        /* ici on peux directement setter des valeur a user ! */
         $user->setEnabled(true);
 
 
@@ -70,7 +57,6 @@ class UserType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => User::class,
-                'itemtype' => null,
             ]
         );
     }
