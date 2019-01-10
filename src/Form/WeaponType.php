@@ -2,27 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\ItemType;
+use App\Entity\Weapon;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class ItemTypeType extends AbstractType
+class WeaponType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name')
-            ->add('weight')
-            ->add('pictureFile', FileType::class, array('label' => 'Image'))
+            ->add('damage')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ItemType::class,
+            'data_class' => Weapon::class,
         ]);
     }
 }
