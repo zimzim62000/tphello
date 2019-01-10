@@ -25,7 +25,6 @@ class WeaponUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('quality')
             ->add('weapon')
         ;
 
@@ -38,6 +37,7 @@ class WeaponUserType extends AbstractType
         $item->setActive(false);
         $item->setAmmunition(100);
         $item->setUser($this->token->getToken()->getUser());
+        $item->setQuality(100);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -37,7 +37,7 @@ class WeaponUserController extends AbstractController
             $em->persist($weaponUser);
             $em->flush();
 
-            return $this->redirectToRoute('weapon_user_index');
+            return $this->redirectToRoute('action');
         }
 
         return $this->render('weapon_user/new.html.twig', [
@@ -85,6 +85,6 @@ class WeaponUserController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('weapon_user_index');
+        return $this->redirectToRoute('action');
     }
 }

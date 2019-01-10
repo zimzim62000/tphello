@@ -23,7 +23,7 @@
                 <tr>
                     <td>{{ weapon.weapon.name }}</td>
                     <td>{{ weapon.weapon.damage }}</td>
-                    <td><a href="#">Vendre</a></td>
+                    <td><a href=" {{ path('weapon_user_delete',{'id':weapon.id}) }}">Vendre</a></td>
                 <tr>
                     {% endfor %}
 
