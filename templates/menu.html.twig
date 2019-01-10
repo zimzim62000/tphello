@@ -1,10 +1,34 @@
 {% block menu %}
-    <a href="{{ path('home_index') }}">Home</a>
-    <a href="{{ path('user_index') }}">User</a>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="{{ path('home_index') }}">TP AVANCE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    {% if is_granted('ROLE_USER') %}
-        <a href="{{ path('app_logout') }}">Deconnexion</a>
-    {% else %}
-        <a href="{{ path('app_login') }}">Connexon</a>
-    {% endif %}
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ path('home_index') }}">Home</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ path('user_index') }}">User</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ path('action_index') }}">Action Center</a>
+                </li>
+
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{{ path('app_login') }}">Connexon</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
 {% endblock %}
