@@ -24,7 +24,6 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 
-/.env
 /composer.phar
 /.idea
 /public/itemtype/*

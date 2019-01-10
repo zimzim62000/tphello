@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -11,12 +13,24 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    const HEALT = 1000;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lastName;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -40,15 +54,25 @@ class User implements UserInterface
     private $enabled;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $maxWeight = 0;
+    private $health = self::HEALT;
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\WeaponUser", mappedBy="user")
+     */
+    private $weaponUsers;
+
+    public function __construct()
+    {
+        $this->weaponUsers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -162,18 +186,92 @@ class User implements UserInterface
     /**
      * @return int
      */
-    public function getMaxWeight(): int
+    public function getHealth(): int
     {
-        return $this->maxWeight;
+        return $this->health;
     }
 
     /**
-     * @param int $maxWeight
+     * @param int $health
      */
-    public function setMaxWeight($maxWeight): self
+    public function setHealth($health): self
     {
-        $this->maxWeight = $maxWeight;
+        $this->health = $health;
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|WeaponUser[]
+     */
+    public function getWeaponUsers(): Collection
+    {
+        return $this->weaponUsers;
+    }
+
+    public function addWeaponUser(WeaponUser $weaponUser): self
+    {
+        if (!$this->weaponUsers->contains($weaponUser)) {
+            $this->weaponUsers[] = $weaponUser;
+            $weaponUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWeaponUser(WeaponUser $weaponUser): self
+    {
+        if ($this->weaponUsers->contains($weaponUser)) {
+            $this->weaponUsers->removeElement($weaponUser);
+            // set the owning side to null (unless already changed)
+            if ($weaponUser->getUser() === $this) {
+                $weaponUser->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getFirstName() . " " . $this->getLastName();
+    }
+
+
 }
