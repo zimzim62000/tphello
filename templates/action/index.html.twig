@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bonjour {{ user.firstName }}!{% endblock %}
+
+{% block body %}
+
+    <h1>Bonjour {{  user.firstName }}!</h1>
+
+    <div>
+        <h1>Vos armes</h1>
+
+        {% if listeWeapons is empty %}
+            <p>Vous ne posédez aucune arme</p>
+        {% else %}
+            <table>
+                <tr>
+                    <th>Nom</th>
+                    <th>Dommages</th>
+                    <th>Actions</th>
+                </tr>
+
+                {% for weapon in listeWeapons %}
+                <tr>
+                    <td>{{ weapon.weapon.name }}</td>
+                    <td>{{ weapon.weapon.damage }}</td>
+                    <td><a href="#">Vendre</a></td>
+                <tr>
+                    {% endfor %}
+
+            </table>
+        {% endif %}
+
+        <a href="{{ path('weapon_user_new') }}">Acheter une arme</a>
+    </div>
+
+    <div>
+    <h1>Ennemis</h1>
+
+    {% if listeEnnemis is empty %}
+    <p>Aucun ennemi à proximité</p>
+    {% else %}
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for ennemi in listeEnnemis %}
+        <tr>
+            <td>{{ ennemi.firstName }} {{ ennemi.lastName | upper }}</td>
+            <td><a href="#">Attaquer</a></td>
+        <tr>
+        {% endfor %}
+
+    </table>
+
+    {% endif %}
+
+{% endblock %}
