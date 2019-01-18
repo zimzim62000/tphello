@@ -2,11 +2,13 @@
 
 namespace App\Service\WeaponUser;
 
+use App\Entity\Weapon;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\WeaponUser;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
 
 class LoadWeapon
 {
@@ -24,14 +26,16 @@ class LoadWeapon
 
     public function load(WeaponUser $weaponUser)
     {
-
         $weaponsUser = $this->em->getRepository(WeaponUser::class)->findBy(['user' => $this->token->getToken()->getUser()]);
+
         array_map(function ($obj) {
             $obj->setActive(false);
         }, $weaponsUser);
+
         $weaponUser->setActive(true);
         $this->session->getFlashBag()->add('success', $weaponUser->getWeapon()->getName() . ' is loaded ! beware of the bang bang');
         $this->em->flush();
+
     }
 }
 

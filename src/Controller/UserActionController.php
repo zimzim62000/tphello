@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\User;
+use App\Entity\Weapon;
 use App\Entity\WeaponUser;
 use App\Service\WeaponUser\LoadWeapon;
 use App\Service\WeaponUser\ReloadWeapon;
@@ -19,6 +20,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserActionController extends AbstractController
 {
+
     /**
      * @Route("/", name="user_action_index", methods="GET")
      */
@@ -28,7 +30,7 @@ class UserActionController extends AbstractController
 
         $weaponsUser = $em->getRepository(WeaponUser::class)->findBy(['user' => $this->getUser()]);
 
-        $users = $em->getRepository(User::class)->findAllPlayerAlive();//$this->getUser());
+        $users = $em->getRepository(User::class)->findAllPlayerAlive($this->getUser());
 
         return $this->render('user_action/index.html.twig', ['weaponsUser' => $weaponsUser, 'users' => $users]);
     }
@@ -63,5 +65,4 @@ class UserActionController extends AbstractController
 
         return $this->redirectToRoute('user_action_index');
     }
-
 }
