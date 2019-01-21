@@ -31,7 +31,7 @@ class ShootWeapon{
             $this->session->getFlashBag()->add('success', 'Bang Bang');
 
             $user->setHealth($user->getHealth()-($weaponUser->getQuality()*$weaponUser->getWeapon()->getDamage()));
-            $weaponUser->setAmmunition($weaponUser->getAmmunition()-1);
+            $weaponUser->setAmmunition($weaponUser->getAmmunition() - 1);
 
             $this->em->flush();
         }
