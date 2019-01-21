@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\WeaponUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -47,4 +48,15 @@ class WeaponUserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getWeaponUserActive(User $user): ?WeaponUser
+    {
+        return $this->createQueryBuilder('wu')
+            ->where('wu.user = :user')
+            ->andWhere('wu.active = :active')
+            ->setParameter('user', $user)
+            ->setParameter('active', true)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

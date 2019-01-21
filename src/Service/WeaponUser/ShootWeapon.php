@@ -3,6 +3,7 @@
 namespace App\Service\WeaponUser;
 
 use App\Entity\WeaponUser;
+use App\Repository\WeaponUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
