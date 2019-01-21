@@ -20,10 +20,6 @@ class UserActionControllerTest extends WebTestCase{
         $firewallName = 'main';
         $firewallContext = 'main';
 
-        //$user = new User();
-        //$user->setEmail('user@user.fr');
-        //$token = new PostAuthenticationGuardToken($user, $firewallName, ['ROLE_USER']);
-
         $token = new UsernamePasswordToken('user@user.fr', 'user', $firewallName, ['ROLE_USER']);
         $session->set('_security_'.$firewallContext, serialize($token));
         $session->save();
