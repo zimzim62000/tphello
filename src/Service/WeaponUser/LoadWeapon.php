@@ -35,7 +35,6 @@ class LoadWeapon
         $weaponUser->setActive(true);
         $this->session->getFlashBag()->add('success', $weaponUser->getWeapon()->getName() . ' is loaded ! beware of the bang bang');
         $this->em->flush();
-
     }
 }
 
