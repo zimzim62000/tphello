@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\WeaponUser;
 use App\Form\WeaponUserType;
+use App\Handler\WeaponUserHandler;
 use App\Repository\WeaponUserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,28 +27,16 @@ class WeaponUserController extends AbstractController
     /**
      * @Route("/new", name="weapon_user_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(WeaponUserHandler $weaponUserHandler): Response
     {
-        $weaponUser = new WeaponUser();
-        $form = $this->createForm(WeaponUserType::class, $weaponUser);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($weaponUser);
-            $em->flush();
-
-            if($this->isGranted('ROLE_ADMIN') === true){
-                return $this->redirectToRoute('weapon_user_index');
-            }else{
-                $this->addFlash('success', 'Arme ajouté avec succes');
-                return $this->redirectToRoute('user_action_index');
-            }
+        $weaponUserHandler->setWeaponUser(new WeaponUser());
+        if($weaponUserHandler->proceed() === true){
+            return $weaponUserHandler->treat();
         }
 
         return $this->render('weapon_user/new.html.twig', [
-            'weapon_user' => $weaponUser,
-            'form' => $form->createView(),
+            'weapon_user' => $weaponUserHandler->getWeaponUser(),
+            'form' => $weaponUserHandler->getForm()->createView(),
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WeaponUserRepository")
@@ -18,26 +19,36 @@ class WeaponUser
     private $id;
 
     /**
+     * @Assert\NotBlank
+     *
      * @ORM\Column(type="integer")
      */
     private $quality;
 
     /**
+     * @Assert\NotBlank
+     *
      * @ORM\Column(type="integer")
      */
     private $ammunition;
 
     /**
+     * @Assert\NotBlank
+     *
      * @ORM\ManyToOne(targetEntity="User")
      */
     private $user;
 
     /**
+     * @Assert\NotBlank
+     *
      * @ORM\ManyToOne(targetEntity="Weapon")
      */
     private $weapon;
 
     /**
+     * @Assert\NotBlank
+     *
      * @ORM\Column(type="boolean")
      */
     private $active;
