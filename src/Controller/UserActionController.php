@@ -8,6 +8,7 @@ use App\Entity\Weapon;
 use App\Entity\WeaponUser;
 use App\Service\WeaponUser\LoadWeapon;
 use App\Service\WeaponUser\ReloadWeapon;
+use App\Service\WeaponUser\ShootUser;
 use App\Service\WeaponUser\ShootWeapon;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,6 +63,16 @@ class UserActionController extends AbstractController
     public function shoot(User $user, ShootWeapon $shootWeapon): Response
     {
         $shootWeapon->shoot($user);
+
+        return $this->redirectToRoute('user_action_index');
+    }
+
+    /**
+     * @Route("/shootthesheriff/{id}", name="user_action_shootthesheriff", methods="GET", defaults={"id"=null})
+     */
+    public function shootTheSheriff(User $user = null, ShootUser $shootUser): Response
+    {
+        $shootUser->shootUser($user);
 
         return $this->redirectToRoute('user_action_index');
     }

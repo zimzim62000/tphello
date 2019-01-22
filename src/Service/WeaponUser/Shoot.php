@@ -8,38 +8,37 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+use Symfony\Component\Process\Exception\InvalidArgumentException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class Shoot{
 
-    private $weaponUserRepository;
+    private $em;
 
-    public function __construct(WeaponUserRepository $weaponUserRepository)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->weaponUserRepository = $weaponUserRepository;
+        $this->em = $em;
     }
 
-    /**
-     * @required
-     */
-    public function setToken(TokenStorageInterface $token)
+    private $weaponUser;
+
+    public function setWeaponUser($weaponUser)
     {
-        $this->user = $token->getToken()->getUser();
+        $this->weaponUser = $weaponUser;
     }
 
-    public function shoot(){
 
-        $weaponUser = $this->weaponUserRepository->getWeaponUserActive($this->user);
+    public function shoot(User $user = null){
 
-        if($weaponUser instanceof WeaponUser){
-
-            if($weaponUser->getAmmunition() > 0) {
-                return true;
-            }else{
-                return false;
-            }
+        if(!$this->weaponUser instanceof WeaponUser) {
+            throw new InvalidArgumentException('WeaponUser must be set');
         }
-        return null;
+
+        $this->weaponUser->setAmmunition($this->weaponUser->getAmmunition()-1);
+
+        if($user !== null){
+            $user->setHealth($user->getHealth()-($this->weaponUser->getQuality()*$this->weaponUser->getWeapon()->getDamage()));
+        }
+        $this->em->flush();
     }
 }
-

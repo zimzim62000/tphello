@@ -26,7 +26,6 @@ class WeaponUser
     private $quality;
 
     /**
-     * @Assert\NotBlank
      *
      * @ORM\Column(type="integer")
      */
@@ -47,7 +46,6 @@ class WeaponUser
     private $weapon;
 
     /**
-     * @Assert\NotBlank
      *
      * @ORM\Column(type="boolean")
      */

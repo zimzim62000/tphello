@@ -6,6 +6,8 @@
 
     <div class="panel">
         <h1>Detail user</h1>
+        </a><a
+                href="{{ path('user_action_shootthesheriff') }}">  Shoot Shoot  </a>
     </div>
 
     <div class="panel">
@@ -23,7 +25,8 @@
         {% for user in users %}
             <h2 {% if user.health is same as(constant('App\\Entity\\User::HEALT')) %} class="active" {% endif %}>Name
                 : {{ user.email }} - <span class="point">{{ user.health }}PV</span><a
-                        href="{{ path('user_action_shoot', {'id': user.id}) }}">Shoot</a></h2>
+                        href="{{ path('user_action_shoot', {'id': user.id}) }}">Shoot</a><a
+                        href="{{ path('user_action_shootthesheriff', {'id': user.id}) }}">  Shoot Bis  </a></h2>
         {% endfor %}
     </div>
 

@@ -80,9 +80,9 @@ class WeaponUserHandler
 
         $this->session->getFlashBag()->add('success', 'Arme ajouté avec succes');
 
-        if( $this->securityChecker->isGranted('ROLE_ADMIN') === true){
+        if ($this->securityChecker->isGranted('ROLE_ADMIN') === true) {
             return new RedirectResponse($this->router->generate('weapon_user_index'));
-        }else{
+        } else {
             return new RedirectResponse($this->router->generate('user_action_index'));
         }
     }
