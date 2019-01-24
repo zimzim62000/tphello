@@ -4,7 +4,6 @@ namespace App\Controller;
 
 
 use App\Entity\User;
-use App\Entity\Weapon;
 use App\Entity\WeaponUser;
 use App\Service\WeaponUser\LoadWeapon;
 use App\Service\WeaponUser\ReloadWeapon;
@@ -42,6 +41,8 @@ class UserActionController extends AbstractController
      */
     public function reload(WeaponUser $weaponUser, ReloadWeapon $reloadWeapon): Response
     {
+        dump($this->getUser());die;
+
         $reloadWeapon->reload($weaponUser);
 
         return $this->redirectToRoute('user_action_index');
