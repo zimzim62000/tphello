@@ -23,6 +23,8 @@ class ParierController extends AbstractController
     public function voirPari(Game $game, BetRepository $betRepository){
         $bet = $betRepository->findOneBy(['game' => $game, 'user' => $this->getUser()]);
 
+        $this->denyAccessUnlessGranted('view', $bet);
+
         if(is_null($bet))
             return $this->redirectToRoute('parier_match', ['id' => $game->getId()]);
 
