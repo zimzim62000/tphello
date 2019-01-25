@@ -1,2 +1,48 @@
 {% extends "form_div_layout.html.twig" %}
 
+
+
+{% block score_widget %}
+
+    {{- block('form') -}}
+
+    <div id="color-quality">
+        Score couleur
+    </div>
+
+<script>
+    function changeColor(value){
+        console.log(value);
+        let color = '#FFFFFF';
+        switch(value){
+            case "0": color = 'black';
+                break;
+            case "1": color = 'blue';
+                break;
+            case "2": color = 'blue';
+                break;
+            case "3": color = 'blue';
+                break;
+            case "4": color = 'blue';
+                break;
+            case "5": color = 'blue';
+                break;
+            case "6": color = 'purple';
+                break;
+            case "7": color = 'purple';
+                break;
+            case "8": color = 'purple';
+                break;
+            case "9": color = 'purple';
+                break;
+            case "10": color = 'green';
+                break;
+            case "11": color = 'green';
+                break;
+            case "12": color = 'green';
+                break;
+        }
+        document.getElementById('color-quality').style.backgroundColor = color;
+    }
+</script>
+{% endblock score_widget %}
