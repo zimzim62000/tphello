@@ -29,7 +29,7 @@ class GameUserController extends AbstractController
      */
     public function show(Game $game): Response
     {
-        return $this->render('game/show_matchg.html.twig', ['game' => $game]);
+        return $this->render('game/show_match.html.twig', ['game' => $game]);
     }
 
 }
