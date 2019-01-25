@@ -29,6 +29,8 @@
                     <a href="{{ path('voir_match', {'id': game.id}) }}">show</a>
                     {% if is_granted('ROLE_USER') %}
                         <a href="{{ path('parier_match', {'id' : game.id}) }}">Parier</a>
+                        <a href="{{ path('voir_pari_match', {'id' : game.id}) }}">voir mon pari </a>
+
                     {% endif %}
                 </td>
             </tr>
