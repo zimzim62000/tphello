@@ -23,8 +23,13 @@
                 <td>{{ game.date ? game.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ game.rating }}</td>
                 <td>
-                    <a href="{{ path('game_show', {'id': game.id}) }}">show</a>
-                    <a href="{{ path('game_edit', {'id': game.id}) }}">edit</a>
+                    <a href="{{ path('game_show', {'id': game.id}) }}">show</a> -
+                    <a href="{{ path('game_edit', {'id': game.id}) }}">edit</a> -
+
+                    {% if app.user %}
+                    <a href="{{ path('home_index', {'id': game.id}) }}">Parier</a>
+                    {% endif %}
+
                 </td>
             </tr>
         {% else %}
