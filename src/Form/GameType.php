@@ -7,6 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
+
 class GameType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -16,8 +18,8 @@ class GameType extends AbstractType
             ->add('scoreTeamB')
             ->add('date')
             ->add('rating')
-            ->add('teamA')
-            ->add('teamB')
+            ->add('teamA',\App\Form\Type\TeamType::class)
+            ->add('teamB',\App\Form\Type\TeamType::class)
         ;
     }
 

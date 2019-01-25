@@ -58,7 +58,7 @@ class Team
 
     public function __toString()
     {
-        return "Nom : ".$this->getName()."\nFlag : ".$this->getFlag();
+        return "Nom : ".$this->getName();
     }
 
 }
