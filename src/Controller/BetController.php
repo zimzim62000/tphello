@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Security\AppAccess;
+
 
 /**
  * @Route("/bet")
@@ -55,9 +57,15 @@ class BetController extends AbstractController
      */
     public function show(Bet $bet): Response
     {
-        return $this->render('bet/show.html.twig', [
-            'bet' => $bet,
-        ]);
+
+        if($this->isGranted(AppAccess::ITEM_SHOW, $bet) === true){
+            return $this->render('bet/show.html.twig', [
+                'bet' => $bet,
+            ]);
+        }else{
+            $this->addFlash('error', 'Vous n\'avez pas acces a ce pari desole');
+            return $this->redirectToRoute('bet_index');
+        }
     }
 
     /**
@@ -65,6 +73,7 @@ class BetController extends AbstractController
      */
     public function edit(Request $request, Bet $bet): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::ITEM_EDIT, $bet);
         $form = $this->createForm(BetType::class, $bet);
         $form->handleRequest($request);
 
@@ -87,6 +96,7 @@ class BetController extends AbstractController
      */
     public function delete(Request $request, Bet $bet): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::ITEM_DELETE, $bet);
         if ($this->isCsrfTokenValid('delete'.$bet->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($bet);

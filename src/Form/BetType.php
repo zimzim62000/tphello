@@ -49,7 +49,7 @@ class BetType extends AbstractType
             $bet->setGame($this->game);
             $form->remove('game');
         }
-        $bet->setGame($this->game)->setUser($this->token->getToken()->getUser());
+        $bet->setUser($this->token->getToken()->getUser())->setDate(new \DateTime('now'));
         $form->remove('user')->remove('date');
 
 
