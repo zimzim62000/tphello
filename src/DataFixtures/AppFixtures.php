@@ -36,6 +36,14 @@ class AppFixtures extends Fixture {
 
         $user1 = new User();
         $user1->setEnabled(true);
+        $user1->setEmail('user2@user.fr');
+        $user1->setFirstName('user2');
+        $user1->setLastName('userlast2');
+        $user1->setPassword($this->passwordEncoder->encodePassword($user1,'user2@user.fr'));
+        $manager->persist($user1);
+
+        $user1 = new User();
+        $user1->setEnabled(true);
         $user1->setEmail('admin@admin.fr');
         $user1->setFirstName('admin');
         $user1->setLastName('adminlast');
