@@ -1,6 +1,12 @@
 {% block menu %}
     <a href="{{ path('home_index') }}">Home</a>
     <a href="{{ path('user_index') }}">User</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('team_index') }}">Team</a>
+        <a href="{{ path('game_index') }}">Game</a>
+
+
+    {% endif %}
 
     {% if is_granted('ROLE_USER') %}
         <a href="{{ path('app_logout') }}">Deconnexion</a>

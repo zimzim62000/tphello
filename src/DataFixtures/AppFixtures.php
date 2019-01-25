@@ -49,7 +49,7 @@ class AppFixtures extends Fixture {
         $user1->setEmail('admin@admin.fr');
         $user1->setFirstName('admin');
         $user1->setLastName('admin');
-        $user1->setRoles(array(['ROLE_ADMIN','ROLE_SUPER_ADMIN']));
+        $user1->setRoles(array('ROLE_ADMIN','ROLE_SUPER_ADMIN'));
         $user1->setPassword($this->passwordEncoder->encodePassword($user1,'admin@admin.fr'));
         $manager->persist($user1);
 
