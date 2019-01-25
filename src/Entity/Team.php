@@ -54,4 +54,10 @@ class Team
 
         return $this;
     }
+
+    public function __toString()
+    {
+        $s = ' '.$this->name;
+        return $s;
+    }
 }
