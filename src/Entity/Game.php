@@ -136,4 +136,10 @@ class Game
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getTeamA()." vs ".$this->getTeamB();
+        // TODO: Implement __toString() method.
+    }
 }

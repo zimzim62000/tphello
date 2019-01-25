@@ -27,7 +27,7 @@
                     <a href="{{ path('game_edit', {'id': game.id}) }}">edit</a> -
 
                     {% if app.user %}
-                    <a href="{{ path('home_index', {'id': game.id}) }}">Parier</a>
+                    <a href="{{ path('bet_new', {'game': game.id}) }}">Parier</a>
                     {% endif %}
 
                 </td>
