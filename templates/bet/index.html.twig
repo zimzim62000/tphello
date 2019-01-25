@@ -27,11 +27,7 @@
                 <td>
                     <a href="{{ path('bet_show', {'id': bet.id}) }}">show</a>
                     <a href="{{ path('bet_edit', {'id': bet.id}) }}">edit</a>
-                    {% if is_granted('ROLE_USER') %}
-                        <a href="">Parier</a>
-                    {% else %}
 
-                    {% endif %}
                 </td>
             </tr>
         {% else %}
