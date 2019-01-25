@@ -11,7 +11,8 @@ class ScoreType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'choices' => $this->genererScoreLimite()
+            'choices' => $this->genererScoreLimite(),
+            'attr' => ['onChange' => 'changeColor(this.value)']
         ]);
 
     }
