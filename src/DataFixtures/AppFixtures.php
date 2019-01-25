@@ -93,8 +93,8 @@ class AppFixtures extends Fixture {
             $game1 -> setTeamA($equipe1);
             $game1 -> setTeamB($equipe2);
             $game1 -> setScoreTeamA(2+ $i);
-            $game1 -> setScoreTeamA(4 + $i);
-
+            $game1 -> setScoreTeamB(4 + $i);
+            $game1 ->setRating(2);
             $game1->setDate(new \DateTime("now"));
 
             $manager->persist($game1);

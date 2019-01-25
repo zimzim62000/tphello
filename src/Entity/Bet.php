@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BetRepository")
@@ -27,11 +29,23 @@ class Bet
     private $game;
 
     /**
+     * * @Assert\Range(
+     *      min = 0,
+     *      max = 12,
+     *      minMessage = "{{ limit }} mini",
+     *      maxMessage = "{{ limit }} max"
+     * )
      * @ORM\Column(type="integer")
      */
     private $scoreTeamA;
 
     /**
+     * * @Assert\Range(
+     *      min = 0,
+     *      max = 12,
+     *      minMessage = "{{ limit }} mini",
+     *      maxMessage = "{{ limit }} max"
+     * )
      * @ORM\Column(type="integer")
      */
     private $scoreTeamB;
