@@ -17,7 +17,7 @@ class Team
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,unique=true)
      */
     private $name;
 
@@ -53,5 +53,11 @@ class Team
         $this->flag = $flag;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        $s = ' '.$this->name;
+        return $s;
     }
 }

@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as AssertAcme;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GameRepository")
+ * @AssertAcme\ContrainteEquipe
  */
 class Game
 {
@@ -27,11 +30,19 @@ class Game
     private $teamB;
 
     /**
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 12
+     *     )
      * @ORM\Column(type="integer", nullable=true)
      */
     private $scoreTeamA;
 
     /**
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 12
+     *     )
      * @ORM\Column(type="integer", nullable=true)
      */
     private $scoreTeamB;
@@ -121,5 +132,11 @@ class Game
         $this->rating = $rating;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        $s = $this->teamA.' - '.$this->teamB;
+        return $s;
     }
 }
