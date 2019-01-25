@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as AnthoAssert;
+
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GameRepository")
+ * @AnthoAssert\DifferentTeam
  */
 class Game
 {
@@ -20,6 +23,9 @@ class Game
 
     /**
      * @ORM\ManyToOne(targetEntity="Team")
+     * @Assert\NotIdenticalTo(
+     *     value = teamB
+     * )
      */
     private $teamA;
 
