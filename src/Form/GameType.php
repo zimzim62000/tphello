@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Game;
+use App\Form\Type\ScoreType;
 use Symfony\Component\Form\AbstractType;
 use App\Form\Type\TeamsType;
 
@@ -18,8 +19,8 @@ class GameType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('scoreTeamA')
-            ->add('scoreTeamB')
+            ->add('scoreTeamA',ScoreType::class)
+            ->add('scoreTeamB',ScoreType::class)
             ->add('date')
             ->add('rating')
             ->add('teamA',TeamsType::class)
