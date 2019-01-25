@@ -52,7 +52,7 @@ class AppFixtures extends Fixture {
         $user1->setEmail('user3@user.fr');
         $user1->setFirstName('user3');
         $user1->setLastName('userlast3');
-        $user1->setRoles([" ROLE_ADMIN"]);
+        $user1->setRoles(["ROLE_ADMIN"]);
         $user1->setPassword($this->passwordEncoder->encodePassword($user1,'user3@user.fr'));
         $manager->persist($user1);
 
@@ -82,7 +82,7 @@ class AppFixtures extends Fixture {
         $manager->persist($equipe5);
 
         $equipe6= new Team();
-        $equipe6->setName("Team de ouf");
+        $equipe6->setName("Team de ouf 6");
         $equipe6->setFlag("FR");
         $manager->persist($equipe6);
 
