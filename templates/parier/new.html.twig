@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New bet{% endblock %}
+
+{% block body %}
+    <h1>Place a bet</h1>
+
+    {{ include('parier/_form.html.twig') }}
+
+    <a href="{{ path('matchs') }}">back to list</a>
+{% endblock %}
