@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GameRepository")
+ * @UniqueEntity(fields="teamA", message="TeamA déjà utilisé")
+ * @UniqueEntity(fields="teamB", message="TeamB déjà utilisé")
  */
 class Game
 {
