@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+
                 <th>ScoreTeamA</th>
                 <th>ScoreTeamB</th>
                 <th>Date</th>
@@ -19,7 +19,7 @@
         <tbody>
         {% for bet in bets %}
             <tr>
-                <td>{{ bet.id }}</td>
+
                 <td>{{ bet.scoreTeamA }}</td>
                 <td>{{ bet.scoreTeamB }}</td>
                 <td>{{ bet.date ? bet.date|date('Y-m-d H:i:s') : '' }}</td>
@@ -27,6 +27,11 @@
                 <td>
                     <a href="{{ path('bet_show', {'id': bet.id}) }}">show</a>
                     <a href="{{ path('bet_edit', {'id': bet.id}) }}">edit</a>
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="">Parier</a>
+                    {% else %}
+
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
