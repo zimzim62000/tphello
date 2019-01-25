@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GameRepository")
@@ -27,11 +28,21 @@ class Game
     private $teamB;
 
     /**
+     * * @Assert\Length(
+     *      min = 0,
+     *      max = 12
+     *
+     * )
      * @ORM\Column(type="integer", nullable=true)
      */
     private $scoreTeamA;
 
     /**
+     * * @Assert\Length(
+     *      min = 0,
+     *      max = 12
+     *
+     * )
      * @ORM\Column(type="integer", nullable=true)
      */
     private $scoreTeamB;
@@ -122,4 +133,10 @@ class Game
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getTeamA().$this->getTeamB();
+    }
+
 }
