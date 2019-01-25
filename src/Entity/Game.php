@@ -23,9 +23,6 @@ class Game
 
     /**
      * @ORM\ManyToOne(targetEntity="Team")
-     * @Assert\NotIdenticalTo(
-     *     value = teamB
-     * )
      */
     private $teamA;
 
