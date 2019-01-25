@@ -133,4 +133,10 @@ class Bet
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getAmout().$this->getScoreTeamA().$this->getScoreTeamB().$this->getDate().$this->getUser();
+    }
+
 }

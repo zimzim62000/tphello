@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Bet;
+use App\Entity\Game;
 use App\Form\BetType;
 use App\Repository\BetRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,12 +27,13 @@ class BetController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="bet_new", methods={"GET","POST"})
+     * @Route("/new/{game}", name="bet_new", methods={"GET","POST"}, defaults={"game"=null})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Game $game): Response
     {
         $bet = new Bet();
-        $form = $this->createForm(BetType::class, $bet);
+
+        $form = $this->createForm(BetType::class, $bet,['game' =>$game]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
