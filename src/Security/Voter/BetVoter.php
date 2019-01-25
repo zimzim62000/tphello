@@ -2,6 +2,7 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\Bet;
 use App\Security\AppAccess;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -14,7 +15,7 @@ class BetVoter extends Voter
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return $attribute === AppAccess::BET_VOIR
-            && $subject instanceof \App\Entity\Bet;
+            && $subject instanceof Bet;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
