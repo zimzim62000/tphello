@@ -27,11 +27,21 @@ class Bet
     private $game;
 
     /**
+     * * @Assert\Length(
+     *      min = 0,
+     *      max = 12,
+     *
+     * )
      * @ORM\Column(type="integer")
      */
     private $scoreTeamA;
 
     /**
+     * * @Assert\Length(
+     *      min = 0,
+     *      max = 12,
+     *
+     * )
      * @ORM\Column(type="integer")
      */
     private $scoreTeamB;

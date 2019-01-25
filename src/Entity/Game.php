@@ -27,11 +27,21 @@ class Game
     private $teamB;
 
     /**
+     * * @Assert\Length(
+     *      min = 0,
+     *      max = 12
+     *
+     * )
      * @ORM\Column(type="integer", nullable=true)
      */
     private $scoreTeamA;
 
     /**
+     * * @Assert\Length(
+     *      min = 0,
+     *      max = 12
+     *
+     * )
      * @ORM\Column(type="integer", nullable=true)
      */
     private $scoreTeamB;
