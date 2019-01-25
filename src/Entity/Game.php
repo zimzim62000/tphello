@@ -133,4 +133,10 @@ class Game
 
         return $this;
     }
+
+    public function __toString()
+    {
+        $s = $this->teamA.' - '.$this->teamB;
+        return $s;
+    }
 }

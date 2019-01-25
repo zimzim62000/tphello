@@ -28,7 +28,7 @@
 
 
                     {% if is_granted('ROLE_USER') %}
-                        <button>Parier</button>
+                        <a href="{{ path('bet_new', {'game': game.id }) }}">Parier</a>
                     {% endif %}
                 </td>
             </tr>
