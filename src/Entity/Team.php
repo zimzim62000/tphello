@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TeamRepository")
@@ -17,7 +18,7 @@ class Team
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $name;
 
@@ -54,4 +55,10 @@ class Team
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return "Nom : ".$this->getName()."\nFlag : ".$this->getFlag();
+    }
+
 }
