@@ -3,10 +3,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
+
+
+/**
+ * @ORM\Entity
+ * @UniqueEntity("name")
+ */
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TeamRepository")
  */
+
 class Team
 {
     /**
@@ -16,8 +25,9 @@ class Team
      */
     private $id;
 
+
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique = true)
      */
     private $name;
 
@@ -53,5 +63,10 @@ class Team
         $this->flag = $flag;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }
