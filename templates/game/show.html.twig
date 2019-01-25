@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Game{% endblock %}
+{% block title %}Game {{ game.id }}{% endblock %}
 
 {% block body %}
-    <h1>Game</h1>
+    <h1>Game {{ game.id }}</h1>
 
     <table class="table">
         <tbody>
