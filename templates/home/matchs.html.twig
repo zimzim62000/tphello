@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des matchs{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Team A</th>
+            <th>ScoreTeamA</th>
+            <th>ScoreTeamB</th>
+            <th>Team B</th>
+            <th>Date</th>
+            <th>Rating</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for game in games %}
+            <tr>
+                <td>{{ game.teamA.name }}</td>
+                <td>{{ game.scoreTeamA }}</td>
+                <td>{{ game.scoreTeamB }}</td>
+                <td>{{ game.teamB.name }}</td>
+                <td>{{ game.date ? game.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ game.rating }}</td>
+                <td>
+                    <a href="{{ path('voir_match', {'id': game.id}) }}">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

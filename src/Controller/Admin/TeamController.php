@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 /**
- * @Route("/admin/team")
+ * @Route("/admin/team", name="admin_")
  * @IsGranted("ROLE_ADMIN")
  */
 class TeamController extends AbstractController

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
- * @Route("/admin/game")
+ * @Route("/admin/game", name="admin_")
  * @IsGranted("ROLE_ADMIN")
  */
 class GameController extends AbstractController
