@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GameRepository")
@@ -28,11 +30,23 @@ class Game
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 12,
+     *      minMessage = "The score must be between {{ limit }}",
+     *      maxMessage = "The score must be between {{ limit }}",
+     * )
      */
     private $scoreTeamA;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 12,
+     *      minMessage = "The score must be between {{ limit }}",
+     *      maxMessage = "The score must be between {{ limit }}",
+     * )
      */
     private $scoreTeamB;
 
