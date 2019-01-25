@@ -6,6 +6,7 @@ use App\Entity\Bet;
 use App\Entity\Game;
 use App\Form\BetType;
 use App\Repository\BetRepository;
+use App\Security\AppAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,6 +55,8 @@ class BetController extends AbstractController
      */
     public function show(Bet $bet): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::BET_ACCESS, $bet);
+
         return $this->render('bet/show.html.twig', [
             'bet' => $bet,
         ]);
@@ -64,6 +67,8 @@ class BetController extends AbstractController
      */
     public function edit(Request $request, Bet $bet): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::BET_ACCESS, $bet);
+
         $form = $this->createForm(BetType::class, $bet);
         $form->handleRequest($request);
 
@@ -86,6 +91,8 @@ class BetController extends AbstractController
      */
     public function delete(Request $request, Bet $bet): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::BET_ACCESS, $bet);
+
         if ($this->isCsrfTokenValid('delete'.$bet->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($bet);
