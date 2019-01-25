@@ -22,7 +22,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/matchs", name="matchs", methods="GET")
+     * @Route("/matchs", name="match_index", methods="GET")
      */
     public function matchs(GameRepository $gameRepository): Response
     {
