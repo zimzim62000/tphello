@@ -25,8 +25,7 @@ class GameType extends AbstractType
             ->add('date')
             ->add('rating')
             ->add('teamA')
-            ->add('teamB', TeamType::class)
-        ;
+            ->add('teamB', TeamType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -40,21 +39,21 @@ class GameType extends AbstractType
         $game = $event->getData();
 
 
-        if($this->team !== null){
+        if ($this->team !== null) {
 
-            $form->remove('scoreTeamA')->remove('scoreTeamB')->remove('date')->remove('rating')->remove('teamA');
+            $form->remove('scoreTeamA')->remove('scoreTeamB')->remove('date')->remove('rating')->remove('teamA')->remove('teamB');
 
             $game->setTeamA($this->team);
             $game->setDate(new \DateTime('now'));
             $game->setRating(2.0);
 
-            $team = $this->team;
+
             $form->add('teamB', TeamType::class, [
-                'query_builder' => function (TeamRepository $teamRepository)  use ($team) {
+                'query_builder' => function (TeamRepository $teamRepository) {
                     return $teamRepository->createQueryBuilder('team')
                         ->where('team.id <> :team')
                         ->orderBy('team.name', 'ASC')
-                        ->setParameter('team', $team);
+                        ->setParameter('team', $this->team);// merci PHP7
                 },
             ]);
         }
