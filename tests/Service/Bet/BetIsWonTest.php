@@ -132,15 +132,15 @@ class BetIsWonTest extends TestCase{
         $bet->setScoreTeamB(2);
         $game = $this->createMock(Game::class);
         $game->expects($this->any())
-            ->method('setScoreTeamA')
+            ->method('getScoreTeamA')
             ->willReturn(5);
         $game->expects($this->any())
-            ->method('setScoreTeamB')
+            ->method('getScoreTeamB')
             ->willReturn(0);
         $bet->setGame($game);
 
         $betWin = new BetIsWon();
 
-        $this->assertEquals(BetIsWon::LOSE, $betWin->calcul($bet));
+        $this->assertEquals(BetIsWon::WIN, $betWin->calcul($bet));
     }
 }
