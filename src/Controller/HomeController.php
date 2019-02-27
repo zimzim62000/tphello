@@ -20,29 +20,7 @@ class HomeController extends AbstractController
      */
     public function index(Request $request, TranslatorInterface $translator, SessionInterface $session): Response
     {
-        $session->set('_locale','en');
-
         $name = "ZimZoum";
         return $this->render('home/index.html.twig', ['roro' => $translator->trans('admin.toto',['%name%' => $name])]);
-    }
-
-    /**
-     * @Route({"fr": "/maison", "en": "/house"}, name="home_index_language", methods="GET")
-     */
-    public function indexLanguage(TranslatorInterface $translator): Response
-    {
-        $name = "ZimZoum";
-        return $this->render('home/index.html.twig', ['roro' => $translator->trans('admin.toto',['%name%' => $name])]);
-    }
-
-
-    /**
-     * @Route("/teams", name="home_team", methods={"GET"})
-     */
-    public function homeTeam(TeamRepository $teamRepository): Response
-    {
-        return $this->render('home/teams.html.twig', [
-            'teams' => $teamRepository->findBy([], ['name' => 'ASC']),
-        ]);
     }
 }

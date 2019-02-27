@@ -47,7 +47,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $enabled;
+    private $enabled = false;
 
     /**
      * @var string The hashed password
