@@ -34,13 +34,13 @@ class UserSubscriber implements EventSubscriberInterface{
 
     public function onAuthenticationFailure( AuthenticationFailureEvent $event )
     {
-        dump($event);
-        die('failed login ! ');
+
+        echo 'failed login ! ';
     }
 
     public function onSecurityInteractiveLogin( InteractiveLoginEvent $event )
     {
-        die('login ok ! : '.$event->getAuthenticationToken()->getUser()->getEmail());
+         echo 'login ok ! : '.$event->getAuthenticationToken()->getUser()->getEmail();
     }
 
     public function userPersist(UserEvent $event){

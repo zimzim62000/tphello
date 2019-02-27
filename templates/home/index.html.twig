@@ -23,12 +23,17 @@
     <div class="panel">
         <h2>Subscriber</h2>
         <h2>namespace =  App\EventSubscriber</h2>
-        <h2>Exemple : <a href="#" target="_blank"></a></h2>
+        <h2>Exemple UserEdit et login</h2>
     </div>
 
     <div class="panel">
         <h2>Tp du jour</h2>
-        <h2></h2>
+        <h2>Voyage vers l'infini et au delà <a href="{{ path('home_game') }}">Game</a></h2>
+        <h2>1 - Créer une contrainte de validation pour ActionUser:direction ( LEFT, TOP, RIGHT, BOTTOM )</h2>
+        <h2>2 - Créer un FormType ActionUser:direction en RADIO ( LEFT, TOP, RIGHT, BOTTOM )</h2>
+        <h2>3 - Sécuriser l'action home_game pour ROLE_USER</h2>
+        <h2>4 - Gérer l'action game pour déplacer l'utilisateur avec le principe des listeners ( Edit l'User et loguer l'ActionUser )</h2>
+        <h2>5 - Gérer l'action pour reset l'utilisateur avec le principe des subscribers  ( Si utilisateur à plus de 10 mouvements on le remet sur les coordonnées 0,0 et on supprime l'historique des actions !  )</h2>
     </div>
 
 {% endblock %}
