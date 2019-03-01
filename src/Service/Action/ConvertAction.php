@@ -4,7 +4,7 @@ namespace App\Service\Action;
 
 class ConvertAction{
 
-    public static function convertDirectionToX(string $direction){
+    public static function convertDirectionToY(string $direction){
         switch ($direction){
             case 'TOP':
                 return -1;
@@ -15,7 +15,7 @@ class ConvertAction{
         }
     }
 
-    public static function convertDirectionToY(string $direction){
+    public static function convertDirectionToX(string $direction){
         switch ($direction){
             case 'LEFT':
                 return -1;
