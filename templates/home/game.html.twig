@@ -1,14 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home page{% endblock %}
+{% block title %}Game page{% endblock %}
+
 
 {% block body %}
+
+    <style>
+        td{
+            border:1PX DASHED BLUE;
+        }
+        span.position{
+            color: #4cae4c;
+        }
+    </style>
 
     {% if is_granted('ROLE_USER') %}
         <h1>{{ app.user.username }}  - <a href="{{ path('home_reset') }}">Reset</a></h1>
         <h2>{{ app.user.positionX }} - {{ app.user.positionY }}</h2>
     {% endif %}
 
-   {{ form(form) }}
+    {{ form(form) }}
 
+
+    <table cellspacing="0" cellpadding="0">
+        {% for y in 0..10 %}
+            <tr>
+                {% for x in 0..10 %}
+                    <td ><button><span class="position">{{ x~'.'~y }}</span></button></td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+
+    {% for actionUser in actionsUser %}
+        <h3>{{ loop.index }} : {{ actionUser.user.username }} - {{ actionUser.direction }} - {{ actionUser.positionX }}:{{ actionUser.positionY }} - {{ actionUser.createdAt|date('H:i:s') }}</h3>
+    {% endfor %}
 {% endblock %}
