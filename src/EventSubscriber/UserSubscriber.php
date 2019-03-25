@@ -34,7 +34,6 @@ class UserSubscriber implements EventSubscriberInterface{
             AppEvent::UserEdit => [['userPersist', 0], ['userEditPassword', 128]], //celui le plus haut repond avant le plus bas
             AuthenticationEvents::AUTHENTICATION_FAILURE => 'onAuthenticationFailure',
             SecurityEvents::INTERACTIVE_LOGIN => 'onSecurityInteractiveLogin',
-            AppEvent::UserReset => [['resetPosition', 0], ['checkAction', 256]]
         ];
     }
 
@@ -63,17 +62,4 @@ class UserSubscriber implements EventSubscriberInterface{
         }
     }
 
-    public function resetPosition(Event $event){
-        $this->token->getUser()->setPositionX(0);
-        $this->token->getUser()->setPositionY(0);
-        $this->entityManager->persist($this->token->getUser());
-        $this->entityManager->flush();
-    }
-
-    public function checkAction(Event $event){
-        $actionsUser = $this->entityManager->getRepository(ActionUser::class)->findBy(['user' =>  $this->token->getUser()]);
-        if(count($actionsUser) < 10 ){
-            $event->stopPropagation();
-        }
-    }
 }

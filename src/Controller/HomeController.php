@@ -34,36 +34,4 @@ class HomeController extends AbstractController
     {
         return $this->render('home/index.html.twig');
     }
-
-    /**
-     * @Route("/game", name="home_game", methods="GET|POST")
-     */
-    public function game(Request $request, ActionEvent $event, EventDispatcherInterface $dispatcher, EntityManagerInterface $entityManager){
-
-        $builder = $this->createFormBuilder();
-        $builder->add('action', ActionType::class);
-        $builder->add('submit', SubmitType::class, ['label' => 'Valid direction']);
-        $form = $builder->getForm();
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $event->setAction($data['action']);
-            $dispatcher->dispatch('user.action', $event);
-
-            return $this->redirectToRoute('home_game');
-        }
-
-        $actionsUser = $entityManager->getRepository(ActionUser::class)->findBy(['user' => $this->getUser()]);
-
-        return $this->render('home/game.html.twig', ['form' => $form->createView(), 'actionsUser' => $actionsUser]);
-    }
-
-    /**
-     * @Route("/reset", name="home_reset", methods="GET|POST")
-     */
-    public function reset(Request $request, EventDispatcherInterface $dispatcher){
-        $dispatcher->dispatch(AppEvent::UserReset, new Event());
-        return $this->redirectToRoute('home_game');
-    }
 }

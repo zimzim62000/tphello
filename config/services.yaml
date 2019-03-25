@@ -35,7 +35,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: user.create, priority: 128 }
             - { name: kernel.event_listener, event: user.create, method: 'onUserCreateActive', priority: 512 }
-            - { name: kernel.event_listener, event: user.action, priority: 0 }
 
 
     App\EventListener\PasswordListener:
@@ -45,7 +44,3 @@ services:
     App\EventListener\LoginListener:
         tags:
             - { name: kernel.event_listener, event: user.create, priority: 0 }
-
-    App\EventListener\ActionUserListener:
-        tags:
-            - { name: kernel.event_listener, event: user.action, priority: 128 }

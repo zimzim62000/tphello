@@ -41,24 +41,8 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            /*@Avant
-
-            $mdp = $encoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($mdp);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            $tokenStorage->setToken(
-                new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles())
-            );
-
-            */
-
-            //@Aprés
             $event->setUser($user);
             $dispatcher->dispatch('user.create', $event);
-
 
             return $this->redirectToRoute('user_index');
         }

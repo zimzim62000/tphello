@@ -32,14 +32,4 @@ class UserListener
         $this->entityManager->persist($event->getUser());
         $this->entityManager->flush();
     }
-
-    public function onUserAction(ActionEvent $event){
-
-        $user = $this->token->getUser();
-        $user->setPositionX($user->getPositionX() + ConvertAction::convertDirectionToX($event->getAction()));
-        $user->setPositionY($user->getPositionY() + ConvertAction::convertDirectionToY($event->getAction()));
-
-        $this->entityManager->flush();
-
-    }
 }
