@@ -2,8 +2,13 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+
+
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -19,16 +24,22 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Groups({"user"})
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstName;
 
     /**
+     * @Groups({"user"})
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lastName;
 
     /**
+     * @Groups({"users", "user"})
+     *
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -52,18 +63,29 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="integer")
      */
-    private $positionX =0;
+    private $positionX = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $positionY =0;
+    private $positionY = 0;
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserProduct", mappedBy="user")
+     */
+    private $userProduct;
+
+    /**
+     * @ORM\Column(type="string", length=180, unique=true, nullable=true)
+     */
+    private $apiToken;
+
 
     public function getId(): ?int
     {
@@ -86,14 +108,20 @@ class User implements UserInterface
      * A visual identifier that represents this user.
      *
      * @see UserInterface
+     *
+     * @Groups({"users", "user"})
+     *
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
      * @see UserInterface
+     *
+     * @Groups({"users", "user"})
+     *
      */
     public function getRoles(): array
     {
@@ -102,6 +130,15 @@ class User implements UserInterface
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+    }
+
+    public function addRole(string $role): self
+    {
+        if(!in_array($role, $this->roles)){
+            $this->roles[] = $role;
+        }
+
+        return $this;
     }
 
     public function setRoles(array $roles): self
@@ -116,7 +153,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -128,7 +165,7 @@ class User implements UserInterface
 
     public function getPlainPassword(): ?string
     {
-        return (string) $this->plainPassword;
+        return (string)$this->plainPassword;
     }
 
     public function setPlainPassword(?string $plainPassword): self
@@ -212,7 +249,7 @@ class User implements UserInterface
 
     public function __toString()
     {
-       return $this->email;
+        return $this->email;
     }
 
     /**
@@ -247,6 +284,42 @@ class User implements UserInterface
     public function setPositionY(int $positionY)
     {
         $this->positionY = $positionY;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserProduct()
+    {
+        return $this->userProduct;
+    }
+
+    /**
+     * @param mixed $userProduct
+     */
+    public function setUserProduct($userProduct)
+    {
+        $this->userProduct = $userProduct;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
+
+    /**
+     * @param mixed $apiToken
+     */
+    public function setApiToken($apiToken)
+    {
+        $this->apiToken = $apiToken;
 
         return $this;
     }

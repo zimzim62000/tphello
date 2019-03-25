@@ -5,17 +5,34 @@
 {% block body %}
 
     <div class="panel">
-        <h2>le ...</h2>
+        <h2>le serializer : </h2>
+        <h2>php composer.phar require symfony/serializer</h2>
     </div>
 
 
     <div class="panel">
-
+        <h2>Exemple : </h2>
+        <ul>
+            <li><a href="{{ path('home_serialize') }}">Default</a></li>
+            <li><a href="{{ path('home_serialize', {'choice':1}) }}">Par attribut</a></li>
+            <li><a href="{{ path('home_serialize', {'choice':2}) }}">different format 1</a></li>
+            <li><a href="{{ path('home_serialize', {'choice':3}) }}">different format 2</a></li>
+            <li><a href="{{ path('home_serialize', {'choice':4}) }}">par group 1</a></li>
+            <li><a href="{{ path('home_serialize', {'choice':4}) }}">par group 2</a></li>
+        </ul>
     </div>
 
     <div class="panel">
         <h2>Tp du jour</h2>
+        <h3>Modifier la méthode serializePlus de homeController</h3>
+        <h3>Serialser l'emsemble de l'utilisateur passer en parametre </h3>
+        <h3>Toutes les infos de User -> UserProduct -> Product</h3>
+    </div>
 
+    <div class="panel">
+        <h2>L'autentification apr cle d'api</h2>
+        <h2>security.yml</h2>
+        <h2>le Guard : TokenAuthenticator</h2>
     </div>
 
 {% endblock %}
