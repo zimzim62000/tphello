@@ -1,1 +1,11 @@
 {% extends "form_div_layout.html.twig" %}
+
+
+{% block roles_widget %}
+
+
+    <h2>Je suis : {{ form.vars.data[0]  }} !</h2>
+
+    {{- block('form_widget') -}}
+
+{% endblock roles_widget %}
