@@ -43,6 +43,8 @@ class UserSubscriber implements EventSubscriberInterface{
 
         $produit->setQuantity($produit->getQuantity() - $userProduct->getQuantity());
 
+        $this->entityManager->persist($produit);
+
         $this->entityManager->persist($event->getUserproduct());
         $this->entityManager->flush();
     }
