@@ -49,3 +49,9 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/game, roles: ROLE_USER }
         #- { path: ^/user, roles: ROLE_USER }
+
+        # 1.3 - Sécuriser produit(new/edit/delete) au ROLE_ADMIN et product(index) et userProduct(tous) au ROLE_USER
+        - { path: ^/product/$, roles: ROLE_USER }
+        - { path: ^/product, roles: ROLE_ADMIN }
+
+        - { path: ^/user_product, roles: ROLE_USER }
