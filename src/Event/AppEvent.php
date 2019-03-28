@@ -4,6 +4,11 @@ namespace App\Event;
 
 final class AppEvent
 {
+    /** User */
     const UserEdit = "app.user.edit";
-    const UserReset = "app.user.reset";
+
+    /** UserProduct */
+    const UserProductCreate = "user.product.create";
+
+
 }

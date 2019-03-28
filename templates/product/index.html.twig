@@ -32,7 +32,7 @@
                 </td>
                 <td>
                     {% if is_granted("ROLE_USER") %}
-                        <button href="#">Ajouter au panier</button>
+                        <a href="{{ path('user_product_new', {'product': product.id}) }}">Ajouter au panier</a>
                     {% endif %}
                     <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
                     <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
