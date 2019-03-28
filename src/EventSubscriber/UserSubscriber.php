@@ -2,9 +2,9 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\ActionUser;
 use App\Event\AppEvent;
 use App\Event\UserEvent;
+use App\Event\UserProductEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -31,35 +31,21 @@ class UserSubscriber implements EventSubscriberInterface{
     public static function getSubscribedEvents()
     {
         return [
-            AppEvent::UserEdit => [['userPersist', 0], ['userEditPassword', 128]], //celui le plus haut repond avant le plus bas
-            AuthenticationEvents::AUTHENTICATION_FAILURE => 'onAuthenticationFailure',
-            SecurityEvents::INTERACTIVE_LOGIN => 'onSecurityInteractiveLogin',
+            AppEvent::UserProductQte => ['userProductQte', 0]
         ];
     }
 
-    public function onAuthenticationFailure( AuthenticationFailureEvent $event )
-    {
+    public function userProductQte(UserProductEvent $event){
 
-        echo 'failed login ! ';
-    }
+        $userProduct = $event->getUserproduct();
 
-    public function onSecurityInteractiveLogin( InteractiveLoginEvent $event )
-    {
-         echo 'login ok ! : '.$event->getAuthenticationToken()->getUser()->getEmail();
-    }
+        $produit = $event->getUserproduct()->getProduct();
 
-    public function userPersist(UserEvent $event){
+        $produit->setQuantity($produit->getQuantity() - $userProduct->getQuantity());
 
-        $this->entityManager->persist($event->getUser());
+        $this->entityManager->persist($event->getUserproduct());
         $this->entityManager->flush();
     }
 
-    public function userEditPassword(UserEvent $event){
-
-        if($event->getUser()->getPlainPassword() !== ''){
-            $mdp = $this->encoder->encodePassword($event->getUser(), $event->getUser()->getPlainPassword());
-            $event->getUser()->setPassword($mdp);
-        }
-    }
 
 }
