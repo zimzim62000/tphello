@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Entity\UserProduct;
 use App\Form\UserProductType;
 use App\Repository\UserProductRepository;
@@ -24,12 +25,12 @@ class UserProductController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="user_product_new", methods="GET|POST")
+     * @Route("/new/{product}", name="user_product_new", methods="GET|POST",defaults={"product"=null})
      */
-    public function new(Request $request): Response
+    public function new(Request $request,Product $product = null): Response
     {
         $userProduct = new UserProduct();
-        $form = $this->createForm(UserProductType::class, $userProduct);
+        $form = $this->createForm(UserProductType::class, $userProduct,['product'=> $product]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
