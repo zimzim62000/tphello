@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,6 +17,8 @@ class ProductType extends AbstractType
             ->add('price')
             ->add('createdAt')
             ->add('quantity')
+            ->add('image', FileType::class, ['label' => 'Upload de votre image'])
+
         ;
     }
 

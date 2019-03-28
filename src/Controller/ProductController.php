@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\FileUploader;
+
 
 /**
  * @Route("/product")
@@ -26,13 +28,17 @@ class ProductController extends AbstractController
     /**
      * @Route("/new", name="product_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $product->getImage();
+            $fileName = $fileUploader->upload($file);
+
+            $product->setImage($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();

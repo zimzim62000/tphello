@@ -27,6 +27,13 @@
                 <th>Quantity</th>
                 <td>{{ product.quantity }}</td>
             </tr>
+
+            <tr>
+                <th>Images</th>
+                <td> <img src="{{ asset('uploads/images/' ~ product.image) }}" /> </td>
+            </tr>
+
+
         </tbody>
     </table>
 
