@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
@@ -35,6 +36,23 @@ class Product
      * @ORM\Column(type="integer")
      */
     private $quantity;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $image;
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
 
     public function getId(): ?int
     {
@@ -87,5 +105,10 @@ class Product
         $this->quantity = $quantity;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
