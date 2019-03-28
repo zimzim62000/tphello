@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserCharacters index{% endblock %}
+
+{% block body %}
+
+    <h1>Characters index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for character in characters %}
+            <tr>
+                <td>{{ character.id }}</td>
+                <td>{{ character.name }}</td>
+                <td>
+                    <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
+                    <a href="{{ path('characters_edit', {'id': character.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <hr><hr>
+
+    <h1>UserCharacters index</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>user</th>
+                <th>CreatedAt</th>
+                <th>Favorite</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user_character in user_characters %}
+            <tr>
+                <td>{{ user_character.id }}</td>
+                <td>{{ user_character.user.username }}</td>
+                <td>{{ user_character.createdAt ? user_character.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user_character.favorite ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('user_characters_show', {'id': user_character.id}) }}">show</a>
+                    <a href="{{ path('user_characters_edit', {'id': user_character.id}) }}">edit</a>
+                    <a href="{{ path('game_new', {'id': user_character.id}) }}">Créer une partie</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_characters_new') }}">Create new</a>
+
+
+    <hr><hr>
+    <h1>Game index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>CreatedAt</th>
+            <th>Position</th>
+            <th>Assassination</th>
+            <th>Reanimation</th>
+            <th>Damage</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for game in games %}
+            <tr>
+                <td>{{ game.id }}</td>
+                <td>{{ game.createdAt ? game.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ game.position }}</td>
+                <td>{{ game.assassination }}</td>
+                <td>{{ game.reanimation }}</td>
+                <td>{{ game.damage }}</td>
+                <td>
+                    <a href="{{ path('game_show', {'id': game.id}) }}">show</a>
+                    <a href="{{ path('game_edit', {'id': game.id}) }}">edit</a>
+                    <a href="#">@Hackme - Shoot</a>
+                    <a href="#">@Hackme - End game</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

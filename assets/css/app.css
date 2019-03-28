@@ -7,6 +7,26 @@ h1{
 h2{
     color: blue;
 }
+h3{
+    color: black;
+}
+h4{
+    color: red;
+    font-size: 40px;
+    font-weight: 900;
+}
+span.point{
+    color: darkcyan;
+    font-size: 20px;
+    padding-left: 10px;
+    display:inline-block;
+}
+span.pt{
+    color: yellow;
+    font-size: 20px;
+    padding-right: 10px;
+    display:inline-block;
+}
 .panel{
     padding: 20px;
     margin: 20px;
@@ -16,4 +36,10 @@ h2{
 li{
     color: chocolate;
     font-size: 20px;
+}
+
+h2.active{
+    color: red;
+    font-size: 24px;
+    font-weight: 900;
 }

@@ -19,6 +19,16 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lastName;
+
+    /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -37,12 +47,17 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $enabled;
+    private $enabled = false;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $maxWeight = 0;
+    private $positionX =0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $positionY =0;
 
     /**
      * @var string The hashed password
@@ -160,19 +175,78 @@ class User implements UserInterface
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getMaxWeight(): int
+    public function getFirstName()
     {
-        return $this->maxWeight;
+        return $this->firstName;
     }
 
     /**
-     * @param int $maxWeight
+     * @param mixed $firstName
      */
-    public function setMaxWeight($maxWeight): self
+    public function setFirstName($firstName)
     {
-        $this->maxWeight = $maxWeight;
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+       return $this->email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPositionX()
+    {
+        return $this->positionX;
+    }
+
+    /**
+     * @param mixed $positionX
+     */
+    public function setPositionX(int $positionX)
+    {
+        $this->positionX = $positionX;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPositionY()
+    {
+        return $this->positionY;
+    }
+
+    /**
+     * @param mixed $positionY
+     */
+    public function setPositionY(int $positionY)
+    {
+        $this->positionY = $positionY;
 
         return $this;
     }

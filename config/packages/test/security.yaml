@@ -1,0 +1,10 @@
+security:
+    firewalls:
+        main:
+            http_basic: ~
+#    providers:
+#        in_memory:
+#            memory:
+#                users:
+#                    user@user.fr:#                        password: user@user.fr
+                                  #                        roles: 'ROLE_USER'
