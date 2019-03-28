@@ -8,6 +8,7 @@ use App\Event\AppEvent;
 use App\Event\UserProductEvent;
 use App\Form\UserProductType;
 use App\Repository\UserProductRepository;
+use App\Security\AppAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +35,8 @@ class UserProductController extends AbstractController
      */
     public function new(Request $request, UserProductEvent $event, Product $product = null, EventDispatcherInterface $dispatcher): Response
     {
+
+
         $userProduct = new UserProduct();
         $form = $this->createForm(UserProductType::class, $userProduct, ['product' => $product]);
         $form->handleRequest($request);
@@ -58,9 +61,12 @@ class UserProductController extends AbstractController
      */
     public function show(UserProduct $userProduct): Response
     {
-        return $this->render('user_product/show.html.twig', [
-            'user_product' => $userProduct,
-        ]);
+        if ($this->isGranted(AppAccess::USERORDER_SHOW, $userProduct) === true) {
+            return $this->render('user_product/show.html.twig', ['user_product' => $userProduct]);
+        } else {
+            $this->addFlash('error', 'Autorization denied');
+            return $this->redirectToRoute('user_product_index');
+        }
     }
 
     /**
@@ -68,6 +74,7 @@ class UserProductController extends AbstractController
      */
     public function edit(Request $request, UserProduct $userProduct): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::USERORDER_EDIT, $userProduct);
         $form = $this->createForm(UserProductType::class, $userProduct);
         $form->handleRequest($request);
 
