@@ -30,7 +30,7 @@
                     <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
                 </td>
                 {% if is_granted('ROLE_USER') %}
-                    <th> <button> Ajouter panier </button></th>
+                    <th> <a href="{{ path('user_product_new', {'product':product.id }) }}"> Ajouter panier </a></th>
                 {% endif %}
             </tr>
         {% else %}
