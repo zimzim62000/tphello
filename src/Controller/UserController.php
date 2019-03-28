@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @Route("/user")
+ * @Route("/usertest")
  */
 class UserController extends AbstractController
 {
