@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\UserProduct;
+use App\Event\AppEvent;
+use App\Event\UserProductEvent;
 use App\Form\UserProductType;
 use App\Repository\UserProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,7 +35,7 @@ class UserProductController extends AbstractController
     /**
      * @Route("/new/{product}", name="user_product_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Product $product = null): Response
+    public function new(Request $request, UserProductEvent $userProductEvent, EventDispatcherInterface $dispatcher, Product $product = null): Response
     {
         $userProduct = new UserProduct();
         $form = $this->createForm(UserProductType::class, $userProduct, ['product' => $product]);
@@ -42,6 +45,9 @@ class UserProductController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($userProduct);
             $entityManager->flush();
+
+            $userProductEvent->setUserProduct($userProduct);
+            $dispatcher->dispatch(AppEvent::UserProductAdd, $userProductEvent);
 
             return $this->redirectToRoute('user_product_index');
         }
@@ -89,7 +95,7 @@ class UserProductController extends AbstractController
      */
     public function delete(Request $request, UserProduct $userProduct): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$userProduct->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $userProduct->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($userProduct);
             $entityManager->flush();
