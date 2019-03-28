@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserOrderRepository")
@@ -28,6 +29,7 @@ class UserOrder
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Choice({0, 5, 10, 15, 30, 50})
      */
     private $discount;
 
