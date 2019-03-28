@@ -3,19 +3,27 @@
 namespace App\Form;
 
 use App\Entity\Team;
+use App\Form\Type\TeamsType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
+
+
 
 class TeamType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('flag')
-        ;
+            ->add("name")
+            ->add("flag");
     }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

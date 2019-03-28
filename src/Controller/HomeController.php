@@ -3,6 +3,10 @@
 namespace App\Controller;
 
 
+use App\Entity\ActionUser;
+use App\Event\ActionEvent;
+use App\Event\AppEvent;
+use App\Form\Type\ActionType;
 use App\Repository\GameRepository;
 use App\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +17,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Doctrine\ORM\EntityManagerInterface;
+
+use Symfony\Component\EventDispatcher\Event;
+
 class HomeController extends AbstractController
 {
     /**
@@ -20,29 +32,6 @@ class HomeController extends AbstractController
      */
     public function index(Request $request, TranslatorInterface $translator, SessionInterface $session): Response
     {
-        $session->set('_locale','en');
-
-        $name = "ZimZoum";
-        return $this->render('home/index.html.twig', ['roro' => $translator->trans('admin.toto',['%name%' => $name])]);
-    }
-
-    /**
-     * @Route({"fr": "/maison", "en": "/house"}, name="home_index_language", methods="GET")
-     */
-    public function indexLanguage(TranslatorInterface $translator): Response
-    {
-        $name = "ZimZoum";
-        return $this->render('home/index.html.twig', ['roro' => $translator->trans('admin.toto',['%name%' => $name])]);
-    }
-
-
-    /**
-     * @Route("/teams", name="home_team", methods={"GET"})
-     */
-    public function homeTeam(TeamRepository $teamRepository): Response
-    {
-        return $this->render('home/teams.html.twig', [
-            'teams' => $teamRepository->findBy([], ['name' => 'ASC']),
-        ]);
+        return $this->render('home/index.html.twig');
     }
 }
