@@ -8,6 +8,7 @@ use App\Event\AppEvent;
 use App\Event\UserProductEvent;
 use App\Form\UserProductType;
 use App\Repository\UserProductRepository;
+use App\Security\AppAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,7 @@ class UserProductController extends AbstractController
     /**
      * @Route("/new/{product}", name="user_product_new", methods="GET|POST",defaults={"product"=null})
      */
-    public function new(Request $request,Product $product,UserProductEvent $event, EventDispatcherInterface $dispatcher): Response
+    public function new(Request $request,Product $product=null,UserProductEvent $event, EventDispatcherInterface $dispatcher): Response
     {
         $userProduct = new UserProduct();
         $form = $this->createForm(UserProductType::class, $userProduct,['product'=> $product]);
@@ -55,6 +56,7 @@ class UserProductController extends AbstractController
      */
     public function show(UserProduct $userProduct): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::USER_PRODUCT_SHOW, $userProduct);
         return $this->render('user_product/show.html.twig', ['user_product' => $userProduct]);
     }
 
@@ -63,6 +65,7 @@ class UserProductController extends AbstractController
      */
     public function edit(Request $request, UserProduct $userProduct): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::USER_PRODUCT_EDIT, $userProduct);
         $form = $this->createForm(UserProductType::class, $userProduct);
         $form->handleRequest($request);
 
