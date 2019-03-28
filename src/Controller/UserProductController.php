@@ -8,6 +8,7 @@ use App\Entity\UserProduct;
 use App\Event\AppEvent;
 use App\Form\UserProductType;
 use App\Repository\UserProductRepository;
+use App\Security\AppAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,9 +58,12 @@ class UserProductController extends AbstractController
      */
     public function show(UserProduct $userProduct): Response
     {
-        return $this->render('user_product/show.html.twig', [
-            'user_product' => $userProduct,
-        ]);
+        if($this->isGranted(AppAccess::USER_PRODUCT_SHOW, $userProduct) === true){
+            return $this->render('user_product/show.html.twig', ['user_product' => $userProduct]);
+        }else{
+            $this->addFlash('error', 'Vous n\'avez pas accès à cet UserProduct');
+            return $this->redirectToRoute('user_product_index');
+        }
     }
 
     /**
@@ -67,6 +71,8 @@ class UserProductController extends AbstractController
      */
     public function edit(Request $request, UserProduct $userProduct): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::USER_PRODUCT_EDIT, $userProduct);
+
         $form = $this->createForm(UserProductType::class, $userProduct);
         $form->handleRequest($request);
 
