@@ -14,6 +14,7 @@
                 <th>CreatedAt</th>
                 <th>Quantity</th>
                 <th>actions</th>
+                <th>Panier</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
                     <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
                     <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
                 </td>
+                <th> <button> Ajouter panier </button></th>
             </tr>
         {% else %}
             <tr>
