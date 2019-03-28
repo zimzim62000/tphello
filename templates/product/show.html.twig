@@ -27,6 +27,14 @@
                 <th>Quantity</th>
                 <td>{{ product.quantity }}</td>
             </tr>
+            <tr>
+                <th>Image</th>
+                <td>
+                    {% if product.image %}
+                        <img src="{{ asset('image/'~product.image) }}">
+                    {% endif %}
+                </td>
+            </tr>
         </tbody>
     </table>
 
