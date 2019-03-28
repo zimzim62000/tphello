@@ -29,7 +29,9 @@
                     <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
                     <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
                 </td>
-                <th> <button> Ajouter panier </button></th>
+                {% if is_granted('ROLE_USER') %}
+                    <th> <button> Ajouter panier </button></th>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
