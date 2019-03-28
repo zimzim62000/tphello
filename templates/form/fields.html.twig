@@ -1,46 +1,11 @@
 
 {% extends "form_div_layout.html.twig" %}
 
+{% block roles_widget %}
 
 
-{% block score_widget %}
+    <h2>Je suis : {{ form.vars.data[0]  }} !</h2>
 
-    {{- block('form') -}}
+    {{- block('form_widget') -}}
 
-    <div id="color-quality">
-        Ma belle couleur
-    </div>
-
-    <script>
-        function changeColor(value){
-            console.log(value);
-            let color = '#FFFFFF';
-
-            switch(value){
-                case "12":
-                case "11":
-                case "10":
-                    color = 'green';
-                    break;
-                case "9":
-                case "8":
-                case "7":
-                case "6":
-                    color = 'purple';
-                    break;
-                case "5":
-                case "4":
-                case "3":
-                case "2":
-                case "1":
-                    color = 'blue';
-                    break;
-                case "0": color = 'black';
-                    break;
-            }
-
-            document.getElementById('color-quality').style.backgroundColor = color;
-        }
-    </script>
-
-{% endblock score_widget %}
+{% endblock roles_widget %}

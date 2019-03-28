@@ -35,7 +35,6 @@ security:
                 authenticators:
                    - App\Security\LoginFormAuthenticator
             #provider: app_user_provider
-
             #form_login:
             #    login_path: login
             #    check_path: login
@@ -48,5 +47,7 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/team, roles: ROLE_ADMIN }
-        - { path: ^/game, roles: ROLE_ADMIN }
+        - { path: /product/$, roles: ROLE_USER }
+        - { path: ^/product/, roles: ROLE_ADMIN }
+        - { path: ^/user_product, roles: ROLE_USER }
+

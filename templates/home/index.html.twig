@@ -5,47 +5,51 @@
 {% block body %}
 
     <div class="panel">
-        <h1 class="title">TP Mid Saison</h1>
-        <h2>Gestion de pari sur des match <br />
-            <strong>Team</strong> : id, name<Br />
-            <strong>Game</strong> : id, TeamA , TeamB, scoreTeamA, scoreTeamB, date, rating ( par defaut : 2.0 )<Br />
-            <strong>Bet</strong> : id, User , game, scoreTeamA, scoreTeamB, date, amount <Br />
-        </h2>
-        <h4>
-            Attention : je veux 1 commit par question ex : git commit -am "question 2-a"<br />
-            Seul le code du commit sera interpreté pour vous corriger :)
-        </h4>
+        <h2>Tp training</h2>
+        <h2>En condition réel !</h2>
+        <h1>Chaque question correspond à 1 commit ( au total : 19 commits )</h1>
+    </div>
+
+
+    <div class="panel">
+        <h2>1.1 - Création de fixtures de 5 produits et attribuer au moins 2 produits à chaque utilisateur</h2>
+        <h2>1.2 - Création des CRUD de Product et de UserProduct</h2>
+        <h2>1.3 - Sécuriser produit(new/edit/delete) au ROLE_ADMIN et product(index) et userProduct(tous) au ROLE_USER</h2>
+        <h2>2 - Ajouter une image à un produit ( Gestion de l'import et affichage dans la page show)</h2>
+        <h2>3.1 - Sur la page de listing des produits ( Product:index) créer un bouton "Ajouter au panier" à coter de
+            chaque
+            produit </h2>
+        <h2>3.2 - Le bouton "Ajouter au panier" à coter de chaque produit est disponible seulement si un utilisateur
+            est connecté.</h2>
+        <h2>3.3 - Modification du formulaire de UserProduct pour que, lorsqu'un produit est selectionné ( lors du clic sur "Ajouter au panier"), seul la
+            quantité reste visible (User et Product directement set )</h2>
+        <h2>4.1 - Mettre en place le process de création de UserProduct avec les subscribers et retirer la quantité au stock du
+            produit</h2>
+        <h2>4.2 - Créer une contrainte de validation sur UserProduct pour que la quantité demandé ne puisse pas
+            dépasser la quantité reel du produit</h2>
+        <h2>5.1 - Lorsque un utilisateur a au moins 1 UserProduct un bouton "Acheter" apparait en haut a droite de la page Product:index</h2>
+        <h2>5.2 - Création de la contrainte de validation de UserOrder:discount pour qu'il soit égale à 0, 5, 10, 15, 30 ou 50</h2>
+        <h2>5.3 - Création du FormType de UserOrder:discount pour qu'il resemble à un input radio</h2>
+        <h2>5.4 - Personnalisation du champ UserOrder:discount pour que la couleur de fond du champ change de #000000 = 0 jusque #FF0000 = 50 lors de la selection de la remise</h2>
+        <h2>5.5 - Création du form de UserOrder et gestion de la création ( Calcul de UserOrder => price = somme des quantités * prix du produit avec la remise )</h2>
+        <h2>6.1 - Création d'un service qui calcul les gains réalisés de journée( somme de tous les userOrder ) et le potentiel ( somme de tous les UserProduct sans userOrder )</h2>
+        <h2>6.2 - Afficher le resultat des calculs de la journée sur une page dédié</h2>
+        <h2>6.3 - Tester le service calcul</h2>
+        <h2>7.1 - Modifier le service de calcul pour calculer la somme gagnée si les commandes n'avaient pas de remise</h2>
+        <h2>7.2 - Modifier le Test du service calcul</h2>
+	<h2>8 - Créer le voter pour sécuriser UserOrder:show UserOrder:Edit pour qu'il ne soit accesible que par l'utilisateur de la commande</h2>
     </div>
 
     <div class="panel">
-
-        <h3><span class="pt">1 - </span>Créer des fixtures : 4 x Utilisateur( dont 1 Admin ) ---- 6 x Equipe ---- 5 x Match<span class="point">0.5pt</span></h3>
-        <h3><span class="pt">2-a - </span>Créer une contrainte pour scoreTeamA et scoreTeamB de Game et Bet sois compris entre 0 et 12 inclus<span class="point">0.5pt</span></h3>
-        <h3><span class="pt">2-b - </span>Créer une contrainte de classe pour que le champ name de team sois unique !<span class="point">0.5pt</span></h3>
-        <h3><span class="pt">3 - </span>Créer une contrainte de classe pour que teamA et teamB soient 2 equipes différentes<span class="point">1.5pt</span></h3>
-        <h3><span class="pt">4 - </span>Créer un BackOffice pour les ROLE_ADMIN pour gérér les Team et les Games ( Crud Team et Game + sécurisation)<span class="point">0.5pt</span></h3>
-        <h3><span class="pt">5 - </span>Créer un formType TeamType qui liste les équipes par nom croissant<span class="point">1pt</span></h3>
-        <h3><span class="pt">6 - </span>Créer un formType ScoreType qui est une liste déroulante comprise entre 0 et 12<span class="point">1pt</span></h3>
-        <h3><span class="pt">7 - </span>Modifier la vue du formType ScoreType pour que un score de 0 est de couleur noir - entre 1 et 5 inclus Bleu - entre 6 et 9 inclus violet - entre 10 et 12 vert<span class="point">2.5pt</span></h3>
-        <h3><span class="pt">8-a - </span>Créer une page qui liste tous les matchs et toutes leurs informations (  action et vue  sauf ID )<span class="point">0.5pt</span></h3>
-        <h3><span class="pt">8-b - </span>Créer une page qui show qui détail les information du match ( action et vue )<span class="point">0.5pt</span></h3>
-        <h3><span class="pt">8-c - </span>Si un utlisateur est connecté, il à un bouton "parier" à cotér de chaque match<span class="point">0.5pt</span></h3>
-        <h3><span class="pt">9-a - </span>Créer les actions et le formulaire pour créer/modifier le pari de l'utilisateur connecté( Seul les champs des scores et amount sont modifiables/visibles )<span class="point">3pt</span></h3>
-        <h3><span class="pt">9-b - </span>Dans la page de listing des matchs si l'utilisateur à déja parié le bouton parier est remplacé par "mettre à jours mon pari"<span class="point">1pt</span></h3>
-        <h3><span class="pt">10-a - </span>Sur cette meme page ajouter un bouton "voir mon pari" qui redirige vers ma page show du BET ( création de l'action et de la vue associé)<span class="point">0.5pt</span></h3>
-        <h3><span class="pt">10-b - </span>Créer le voter pour autoriser seulement l'utilisateur qui a parié à voir son pari et sécurisé le site ( controller/vue) <span class="point">2pt</span></h3>
-        <h3><span class="pt">11-a - </span>Créer un service qui calcule les gains potentiels de l'utilisateur sur chaque match<span class="point">3pt</span><br />
-            Si l'utilisateur à la bonne issue du match ratio de 1<br />
-            Si l'utilisateur à le score exacte le ratio est de 3<br />
-            Calcul Gain: Amount * Rating * ratio<br />
-        </h3>
-        <h3><span class="pt">11-b - </span>Afficher le gain ( en vert )ou la perte ( en rouge ) sur la page de detail du match <span class="point">1pt</span></h3>
-        <h3>
-            <span class="pt">12 - </span>Tester le service qui calcul les gains<span class="point">3pt</span>
-        </h3>
-        <h3>
-            <span class="pt">Bonus - </span>Respect des bonnes pratiques ( naming, ...) <span class="point">2pt</span>
-        </h3>
+        <h1>Point bonus = 5pts</h1>
+        <h2>1 => 0.25pt</h2>
+        <h2>2 => 0.5pt</h2>
+        <h2>3 => 0.5pt</h2>
+        <h2>4 => 1pt</h2>
+        <h2>5 => 1pt</h2>
+        <h2>6 => 1pt</h2>
+        <h2>7 => 0.25pt</h2>
+	<h2>8 => 0.5pt</h2>
     </div>
 
 {% endblock %}
