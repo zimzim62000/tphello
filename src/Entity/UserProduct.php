@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator as AnthoAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserProductRepository")
+ *
+ * @AnthoAssert\ProductQuantity
  */
 class UserProduct
 {
