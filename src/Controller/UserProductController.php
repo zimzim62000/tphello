@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\UserProduct;
+use App\Event\AppEvent;
+use App\Event\UserProductEvent;
 use App\Form\UserProductType;
 use App\Repository\UserProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,16 +30,16 @@ class UserProductController extends AbstractController
     /**
      * @Route("/new/{product}", name="user_product_new", methods="GET|POST",defaults={"product"=null})
      */
-    public function new(Request $request,Product $product = null): Response
+    public function new(Request $request,Product $product,UserProductEvent $event, EventDispatcherInterface $dispatcher): Response
     {
         $userProduct = new UserProduct();
         $form = $this->createForm(UserProductType::class, $userProduct,['product'=> $product]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($userProduct);
-            $em->flush();
+
+            $event->setUserProduct($userProduct);
+            $dispatcher->dispatch(AppEvent::UserProductSave, $event);
 
             return $this->redirectToRoute('user_product_index');
         }
