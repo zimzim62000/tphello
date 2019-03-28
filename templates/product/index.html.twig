@@ -24,7 +24,9 @@
                 <td>{{ product.price }}</td>
                 <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ product.quantity }}</td>
+                {% if is_granted("ROLE_USER") %}
                 <td> <button> Ajouter au panier </button></td>
+                {% endif %}
                 <td>
                     <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
                     <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
