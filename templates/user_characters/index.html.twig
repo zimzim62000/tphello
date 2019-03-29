@@ -12,6 +12,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Role</th>
+            <th>Image</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -21,6 +22,7 @@
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
                 <td>{{ character.role.name }}</td>
+                <td><img src="{{ asset('uploads/images/' ~ character.image) }}" alt="Image de profil" /></td>
                 <td>
                     {% if is_granted("ROLE_ADMIN") %}
                     <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
