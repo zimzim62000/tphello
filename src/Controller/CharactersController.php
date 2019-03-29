@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/characters")
@@ -17,6 +18,7 @@ class CharactersController extends AbstractController
 {
     /**
      * @Route("/", name="characters_index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(CharactersRepository $charactersRepository): Response
     {
@@ -27,6 +29,7 @@ class CharactersController extends AbstractController
 
     /**
      * @Route("/new", name="characters_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function new(Request $request): Response
     {
@@ -50,6 +53,7 @@ class CharactersController extends AbstractController
 
     /**
      * @Route("/{id}", name="characters_show", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function show(Characters $character): Response
     {
@@ -60,6 +64,7 @@ class CharactersController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="characters_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Characters $character): Response
     {
@@ -82,6 +87,7 @@ class CharactersController extends AbstractController
 
     /**
      * @Route("/{id}", name="characters_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Characters $character): Response
     {

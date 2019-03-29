@@ -11,6 +11,7 @@ use App\Repository\UserCharactersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -20,6 +21,7 @@ class UserCharactersController extends AbstractController
 {
     /**
      * @Route("/", name="user_characters_index", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function index(UserCharactersRepository $userCharactersRepository, CharactersRepository $charactersRepository, GameRepository $gameRepository): Response
     {
@@ -32,6 +34,7 @@ class UserCharactersController extends AbstractController
 
     /**
      * @Route("/new", name="user_characters_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
@@ -55,6 +58,7 @@ class UserCharactersController extends AbstractController
 
     /**
      * @Route("/{id}", name="user_characters_show", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function show(UserCharacters $userCharacter): Response
     {
@@ -65,6 +69,7 @@ class UserCharactersController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="user_characters_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, UserCharacters $userCharacter): Response
     {
@@ -87,6 +92,7 @@ class UserCharactersController extends AbstractController
 
     /**
      * @Route("/{id}", name="user_characters_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, UserCharacters $userCharacter): Response
     {
