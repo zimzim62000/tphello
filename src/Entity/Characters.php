@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator\Constraints as AcmeAssert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CharactersRepository")
+ * @AcmeAssert\DifferentNomCharacter
  */
 class Characters
 {
@@ -26,6 +29,23 @@ class Characters
      * @ORM\JoinColumn(nullable=false)
      */
     private $role;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $image;
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {

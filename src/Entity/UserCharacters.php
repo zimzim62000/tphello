@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator\Constraints as AcmeAssert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserCharactersRepository")
+ * @AcmeAssert\DifferentUserCharacter
  */
 class UserCharacters
 {

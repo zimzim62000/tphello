@@ -3,7 +3,6 @@
 {% block title %}UserCharacters index{% endblock %}
 
 {% block body %}
-
     <h1>Characters index</h1>
 
     <table class="table">
@@ -11,6 +10,8 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
+            <th>Role</th>
+            <th>Image</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -19,9 +20,17 @@
             <tr>
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
+                <td>{{ character.role }}</td>
                 <td>
-                    <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
-                    <a href="{{ path('characters_edit', {'id': character.id}) }}">edit</a>
+                    {% if character.image %}
+                        <img src="{{ asset('image/'~character.image) }}">
+                    {% endif %}
+                </td>
+                <td>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
+                        <a href="{{ path('characters_edit', {'id': character.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -42,6 +51,8 @@
                 <th>user</th>
                 <th>CreatedAt</th>
                 <th>Favorite</th>
+                <th>Nom</th>
+                <th>Role</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -52,10 +63,12 @@
                 <td>{{ user_character.user.username }}</td>
                 <td>{{ user_character.createdAt ? user_character.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ user_character.favorite ? 'Yes' : 'No' }}</td>
+                <td>{{ user_character.characters.name }}</td>
+                <td>{{ user_character.characters.role }}</td>
                 <td>
                     <a href="{{ path('user_characters_show', {'id': user_character.id}) }}">show</a>
                     <a href="{{ path('user_characters_edit', {'id': user_character.id}) }}">edit</a>
-                    <a href="{{ path('game_new', {'id': user_character.id}) }}">Créer une partie</a>
+                    <a href="{{ path('game_new', {'userCharacters': user_character.id}) }}">Créer une partie</a>
                 </td>
             </tr>
         {% else %}
@@ -81,6 +94,7 @@
             <th>Assassination</th>
             <th>Reanimation</th>
             <th>Damage</th>
+            <th>Charac</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -93,11 +107,12 @@
                 <td>{{ game.assassination }}</td>
                 <td>{{ game.reanimation }}</td>
                 <td>{{ game.damage }}</td>
+                <td>{{ game.userCharacters }}</td>
                 <td>
                     <a href="{{ path('game_show', {'id': game.id}) }}">show</a>
                     <a href="{{ path('game_edit', {'id': game.id}) }}">edit</a>
-                    <a href="#">@Hackme - Shoot</a>
-                    <a href="#">@Hackme - End game</a>
+                    <a href="{{ path('game_shoot', {'id': game.id}) }}">Shoot at ennemies</a>
+                    <a href="{{ path('game_endgame', {'id': game.id}) }}">End game</a>
                 </td>
             </tr>
         {% else %}

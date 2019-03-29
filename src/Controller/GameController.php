@@ -3,12 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Entity\UserCharacters;
+use App\Event\AppEvent;
+use App\Event\GameEvent;
 use App\Form\GameType;
 use App\Repository\GameRepository;
+use App\Security\AppAccess;
+use App\Service\LetsShoot;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @Route("/game")
@@ -26,12 +34,12 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="game_new", methods={"GET","POST"})
+     * @Route("/new/{userCharacters}", name="game_new", methods={"GET","POST"}, defaults={"userCharacters"=null})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserCharacters $userCharacters = null): Response
     {
         $game = new Game();
-        $form = $this->createForm(GameType::class, $game);
+        $form = $this->createForm(GameType::class, $game, ["userCharacters" => $userCharacters]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,6 +61,8 @@ class GameController extends AbstractController
      */
     public function show(Game $game): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::GAME_METHODS, $game);
+
         return $this->render('game/show.html.twig', [
             'game' => $game,
         ]);
@@ -63,6 +73,8 @@ class GameController extends AbstractController
      */
     public function edit(Request $request, Game $game): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::GAME_METHODS, $game);
+
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
 
@@ -85,6 +97,8 @@ class GameController extends AbstractController
      */
     public function delete(Request $request, Game $game): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::GAME_METHODS, $game);
+
         if ($this->isCsrfTokenValid('delete'.$game->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($game);
@@ -92,5 +106,32 @@ class GameController extends AbstractController
         }
 
         return $this->redirectToRoute('game_index');
+    }
+
+    /**
+     * @Route("/{id}/shoot", name="game_shoot", methods={"GET","POST"})
+     */
+    public function shoot(Request $request, Game $game, LetsShoot $letsShoot, TranslatorInterface $translator, SessionInterface $session): Response
+    {
+        $game = $letsShoot->shoot($game, rand(1, 10));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($game);
+        $em->flush();
+
+        $session->set('_locale', 'en');
+        $this->addFlash('success', $translator->trans('shoot.callback'));
+
+        return $this->redirectToRoute('user_characters_index');
+    }
+
+    /**
+     * @Route("/{id}/endgame", name="game_endgame", methods={"GET","POST"})
+     */
+    public function endgame(Request $request, Game $game, GameEvent $event, EventDispatcherInterface $dispatcher): Response
+    {
+        $event->setGame($game);
+        $dispatcher->dispatch(AppEvent::GameEnd, $event);
+
+        return $this->redirectToRoute('user_characters_index');
     }
 }

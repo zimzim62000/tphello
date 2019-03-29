@@ -5,3 +5,6 @@ admin:
 game:
     new:
         choiceopponent: "Quel adversaire pour %team% , à vous de choisir ?"
+
+shoot:
+    callback: "Français : Vous avez tiré"
