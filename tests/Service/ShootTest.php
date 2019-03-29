@@ -57,6 +57,17 @@ class ShootTest extends TestCase
         $this->assertEquals($game->getDamage(), 0);
     }
 
+    public function testParamsTooHigh()
+    {
+        $game = $this->maGame();
+
+        $testShoot = new LetsShoot();
+        $game = $testShoot->shoot($game, 11);
+
+        $this->assertEquals($game->getAssassination(), 0);
+        $this->assertEquals($game->getDamage(), 0);
+    }
+
     public function testBadParams()
     {
         $game = $this->maGame();
