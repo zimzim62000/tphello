@@ -43,6 +43,7 @@ class GameType extends AbstractType
         if($this->userCharacters ==! null)
         {
             $game->setUserCharacters($this->userCharacters);
+            $form->remove('userCharacters');
         }
         $game->setCreatedAt(new \DateTime())
             ->setReanimation(0)
@@ -50,6 +51,12 @@ class GameType extends AbstractType
             ->setEndGame(false)
             ->setDamage(0)
             ->setAssassination(0);
+
+        $form->remove('createdAt')
+            ->remove('reanimation')
+            ->remove('position')
+            ->remove('assassination')
+            ->remove('damage');
     }
 
     public function configureOptions(OptionsResolver $resolver)
