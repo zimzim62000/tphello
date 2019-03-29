@@ -10,8 +10,13 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class GameType extends AbstractType
 {
+
+    private $label;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->label = $options['label'];
+
         $builder
             ->add('createdAt')
             ->add('position')
@@ -19,7 +24,7 @@ class GameType extends AbstractType
             ->add('reanimation')
             ->add('damage')
             ->add('userCharacters')
-            ->add('submit', SubmitType::class )
+            ->add($this->label, SubmitType::class )
         ;
     }
 
@@ -27,6 +32,7 @@ class GameType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Game::class,
+            'label'=>null
         ]);
     }
 }

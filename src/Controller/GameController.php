@@ -31,7 +31,7 @@ class GameController extends AbstractController
     public function new(Request $request): Response
     {
         $game = new Game();
-        $form = $this->createForm(GameType::class, $game);
+        $form = $this->createForm(GameType::class, $game, ['label' => 'Créer une partie']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +63,7 @@ class GameController extends AbstractController
      */
     public function edit(Request $request, Game $game): Response
     {
-        $form = $this->createForm(GameType::class, $game);
+        $form = $this->createForm(GameType::class, $game,['label' => 'Modifier la partie']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
