@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator as AnthoAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserCharactersRepository")
+ * @AnthoAssert\NotSameUserAndChar
  */
 class UserCharacters
 {
