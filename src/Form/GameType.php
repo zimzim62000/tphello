@@ -54,6 +54,7 @@ class GameType extends AbstractType
                 ->setAssassination(0)
                 ->setReanimation(0)
                 ->setDamage(0)
+                ->setEndGame(false)
                 ->setUserCharacters($this->userCharacters);
 
             $form->remove("createdAt")
