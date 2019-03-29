@@ -32,8 +32,7 @@ class UserType extends AbstractType
         $builder
             ->add('email')
             ->add('plainPassword')
-            ->add('roles', RolesType::class)
-            ->add('submit', SubmitType::class, ['label_format' => 'Registration']);
+            ->add('roles', RolesType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -47,22 +46,11 @@ class UserType extends AbstractType
         $form = $event->getForm();
         $user = $event->getData();
 
-        /* @Explain Si Role Super ADMIN alors on ajoute un champ active sinon on enleve le role
-         * if($this->securityChecker->isGranted('ROLE_SUPER_ADMIN') === true){
-         * $form->add('enabled');
-         * }else{
-         * $form->remove('roles');
-         * }
-         */
-
-        if($user->getid() !== null){
-            $user->setMaxWeight(\rand(200, 500));
+        if($user->getId() === null){
+            $form->add('submit', SubmitType::class, ['label_format' => 'Créer']);
+        }else{
+            $form->add('submit', SubmitType::class, ['label_format' => 'Editer']);
         }
-
-        /* ici on peux directement setter des valeur a user ! */
-        $user->setEnabled(true);
-
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -70,7 +58,6 @@ class UserType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => User::class,
-                'itemtype' => null,
             ]
         );
     }
