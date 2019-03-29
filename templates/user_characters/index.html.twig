@@ -11,6 +11,7 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
+            <th> Image </th>
             {% if is_granted('ROLE_ADMIN') %}
             <th>actions</th>
             {% else %}
@@ -24,6 +25,9 @@
             <tr>
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
+
+                <td><img src="{{ asset('characters/images/' ~ character.image) }}">
+
                 <td>
 
                     {% if is_granted('ROLE_ADMIN') %}

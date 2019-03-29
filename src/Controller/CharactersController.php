@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Characters;
 use App\Form\CharactersType;
 use App\Repository\CharactersRepository;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,13 +29,16 @@ class CharactersController extends AbstractController
     /**
      * @Route("/new", name="characters_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request,FileUploader $fileUploader ): Response
     {
         $character = new Characters();
         $form = $this->createForm(CharactersType::class, $character);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $character->getImage();
+            $fileName = $fileUploader->upload($file);
+            $character->setImage($fileName);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($character);
             $entityManager->flush();
