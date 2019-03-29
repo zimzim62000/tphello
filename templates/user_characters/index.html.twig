@@ -4,6 +4,7 @@
 
 {% block body %}
 
+    {% if is_granted('ROLE_ADMIN') %}
     <h1>Characters index</h1>
 
     <table class="table">
@@ -33,6 +34,7 @@
     </table>
 
     <hr><hr>
+    {% endif %}
 
     <h1>UserCharacters index</h1>
     <table class="table">
