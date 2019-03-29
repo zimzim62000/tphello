@@ -16,6 +16,7 @@ class GameType extends AbstractType
 {
     private $securityChecker;
     private $token;
+    private $userCharacter;
 
     public function __construct(AuthorizationCheckerInterface $securityChecker, TokenStorageInterface $token)
     {
@@ -25,6 +26,7 @@ class GameType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->userCharacter = $options['userCharacters'];
         $builder
             ->add('createdAt')
             ->add('position')
@@ -50,12 +52,30 @@ class GameType extends AbstractType
         }
         $form->add('submit', SubmitType::class, ['label_format' => 'Modifier la partie']);
 
+        if ($this->userCharacter !== null) {
+            $game->setUserCharacters($this->userCharacter)
+                ->setPosition(0)
+                ->setAssassination(0)
+                ->setReanimation(0)
+                ->setDamage(0)
+                ->setCreatedAt(new \DateTime('now'))
+                ->setEndGame(false);
+        }
+
+        $form->remove('userCharacters')
+            ->remove('createdAt')
+            ->remove('position')
+            ->remove('damage')
+            ->remove('assassination')
+            ->remove('reanimation');
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Game::class,
+            'userCharacters' => null
         ]);
     }
 }

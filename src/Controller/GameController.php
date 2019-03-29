@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Entity\UserCharacters;
 use App\Form\GameType;
 use App\Repository\GameRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +20,8 @@ class GameController extends AbstractController
     /**
      * @Route("/", name="game_index", methods={"GET"})
      * @IsGranted("ROLE_USER")
+     * @param GameRepository $gameRepository
+     * @return Response
      */
     public function index(GameRepository $gameRepository): Response
     {
@@ -28,13 +31,16 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="game_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="game_new", methods={"GET","POST"}, defaults={"id"=null})
      * @IsGranted("ROLE_USER")
+     * @param Request $request
+     * @param UserCharacters|null $userCharacters
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserCharacters $userCharacters = null): Response
     {
         $game = new Game();
-        $form = $this->createForm(GameType::class, $game);
+        $form = $this->createForm(GameType::class, $game, ['userCharacters' => $userCharacters]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -54,6 +60,8 @@ class GameController extends AbstractController
     /**
      * @Route("/{id}", name="game_show", methods={"GET"})
      * @IsGranted("ROLE_USER")
+     * @param Game $game
+     * @return Response
      */
     public function show(Game $game): Response
     {
@@ -65,6 +73,9 @@ class GameController extends AbstractController
     /**
      * @Route("/{id}/edit", name="game_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
+     * @param Request $request
+     * @param Game $game
+     * @return Response
      */
     public function edit(Request $request, Game $game): Response
     {
@@ -88,6 +99,9 @@ class GameController extends AbstractController
     /**
      * @Route("/{id}", name="game_delete", methods={"DELETE"})
      * @IsGranted("ROLE_USER")
+     * @param Request $request
+     * @param Game $game
+     * @return Response
      */
     public function delete(Request $request, Game $game): Response
     {
