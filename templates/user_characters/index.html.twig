@@ -12,6 +12,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Rôle</th>
+            <th>Picture</th>
             {% if is_granted('ROLE_ADMIN') %}
                 <th>actions</th>
             {% endif %}
@@ -23,6 +24,11 @@
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
                 <td>{{ character.role }}</td>
+                {% if character.picture is not empty %}
+                    <td>
+                        <img src="{{ base_url }}{{ character.pictureWebPath }}" width="150px"/>
+                    </td>
+                {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <td>
                         <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>

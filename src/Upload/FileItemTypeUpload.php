@@ -2,6 +2,7 @@
 
 namespace App\Upload;
 
+use App\Entity\Characters;
 use App\Entity\ItemType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -15,14 +16,14 @@ class FileItemTypeUpload
         $this->targetDirectory = $targetDirectory;
     }
 
-    public function upload(ItemType $itemType)
+    public function upload(Characters $characters)
     {
 
-        if ($itemType->getPictureFile() !== null) {
-            $fileName = md5(uniqid()).'.'.$itemType->getPictureFile()->guessExtension();
+        if ($characters->getPictureFile() !== null) {
+            $fileName = md5(uniqid()).'.'.$characters->getPictureFile()->guessExtension();
             try {
-                $itemType->getPictureFile()->move($this->getTargetDirectory().ItemType::DIR_UPLOAD, $fileName);
-                $itemType->setPicture($fileName);
+                $characters->getPictureFile()->move($this->getTargetDirectory().Characters::DIR_UPLOAD, $fileName);
+                $characters->setPicture($fileName);
             } catch (FileException $e) {
                 // ... handle exception if something happens during file upload
                 throw new \Exception('Error when upload picture');
@@ -30,10 +31,10 @@ class FileItemTypeUpload
         }
     }
 
-    public function removeFile(ItemType $itemType)
+    public function removeFile(Characters $characters)
     {
-        if ($itemType->getPicture() !== null) {
-            return \unlink($this->getTargetDirectory().ItemType::DIR_UPLOAD.'/'.$itemType->getPicture());
+        if ($characters->getPicture() !== null) {
+            return \unlink($this->getTargetDirectory().ItemType::DIR_UPLOAD.'/'.$characters->getPicture());
         }
 
         return true;

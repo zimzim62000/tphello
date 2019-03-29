@@ -10,7 +10,11 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>actions</th>
+                <th>Rôle</th>
+                <th>Picture</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -18,10 +22,18 @@
             <tr>
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
-                <td>
-                    <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
-                    <a href="{{ path('characters_edit', {'id': character.id}) }}">edit</a>
-                </td>
+                <td>{{ character.role }}</td>
+                {% if character.picture is not empty %}
+                    <td>
+                        <img src="{{ base_url }}{{ character.pictureWebPath }}" width="150px"/>
+                    </td>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
+                        <a href="{{ path('characters_edit', {'id': character.id}) }}">edit</a>
+                    </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
