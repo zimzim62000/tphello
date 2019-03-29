@@ -23,9 +23,12 @@ class UserCharactersController extends AbstractController
      */
     public function index(UserCharactersRepository $userCharactersRepository, CharactersRepository $charactersRepository, GameRepository $gameRepository): Response
     {
+		$user = $this->getUser();
+		$userCharacters = $userCharactersRepository->findBy(['user' => $user]);
+
         return $this->render('user_characters/index.html.twig', [
             'games' => $gameRepository->findAll(),
-            'user_characters' => $userCharactersRepository->findAll(),
+            'user_characters' => $userCharacters,
             'characters' => $charactersRepository->findAll()
         ]);
     }
