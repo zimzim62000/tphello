@@ -11,7 +11,9 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
+            {% if is_granted('ROLE_ADMIN') %}
             <th>actions</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -20,8 +22,11 @@
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
                 <td>
+
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
                     <a href="{{ path('characters_edit', {'id': character.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -31,6 +36,7 @@
         {% endfor %}
         </tbody>
     </table>
+
 
     <hr><hr>
 
