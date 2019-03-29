@@ -12,13 +12,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @Route("/user-characters")
  */
 class UserCharactersController extends AbstractController
 {
+    private $token;
+
+    public function __construct(TokenStorageInterface $token)
+    {
+        $this->token = $token;
+    }
+
     /**
      * @Route("/", name="user_characters_index", methods={"GET"})
      */
@@ -26,7 +33,7 @@ class UserCharactersController extends AbstractController
     {
         return $this->render('user_characters/index.html.twig', [
             'games' => $gameRepository->findAll(),
-            'user_characters' => $userCharactersRepository->findBy(['user' => $token->getToken()->getUser()]),
+            'user_characters' => $userCharactersRepository->findBy(['user' => $this->token->getToken()->getUser()]),
             'characters' => $charactersRepository->findAll()
         ]);
     }
