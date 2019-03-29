@@ -17,6 +17,7 @@ class GameType extends AbstractType
 {
     private $token;
     private $valeurBtn;
+    private $userCharacters;
 
     public function __construct(TokenStorageInterface $token)
     {
@@ -25,6 +26,7 @@ class GameType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->userCharacters = $options['userCharacters'];
         $builder
             ->add('createdAt')
             ->add('position')
@@ -57,12 +59,24 @@ class GameType extends AbstractType
         }
 
         $form->add('submit', SubmitType::class, ['label_format' => $valeurBtn]);
+        $game->setDamage('0');
+        $game->setReanimation('0');
+        $game->setAssassination('0');
+        $game->setPosition('0');
+        $game->setCreatedAt(new \DateTime("now"));
+
+        if ($this->userCharacters ==! null)
+        {
+
+            $game->setUserCharacters($this->userCharacters);
+        }
     }
     
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Game::class,
+            'userCharacters' => null,
         ]);
     }
 }
