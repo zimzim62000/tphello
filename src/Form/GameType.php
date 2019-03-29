@@ -39,8 +39,12 @@ class GameType extends AbstractType
         $form->remove('submit');
 
         if ($gameform->getId() !== null) $formOptions = ['label' => 'Modifier la partie' ];
-        else $formOptions = ['label' => 'Créer une partie' ];
+        else {
+
+            $formOptions = ['label' => 'Créer une partie' ];
+        }
 
         $form->add('submit', SubmitType::class, $formOptions);
+
     }
 }
