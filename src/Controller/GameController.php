@@ -4,10 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\UserCharacters;
+use App\Event\AppEvent;
+use App\Event\GameEvent;
+use App\Event\UserCharacterEvent;
+use App\Event\UserEvent;
 use App\Form\GameType;
 use App\Repository\GameRepository;
 use App\Security\AppAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +35,7 @@ class GameController extends AbstractController
     /**
      * @Route("/new/{usercharacter}", name="game_new", methods={"GET","POST"}, defaults={"usercharacter"=null})
      */
-    public function new(Request $request, UserCharacters $usercharacter = null): Response
+    public function new(Request $request, UserCharacterEvent $userevent, GameEvent $gameEvent, EventDispatcherInterface $dispatcher, UserCharacters $usercharacter = null): Response
     {
         $game = new Game();
         $form = $this->createForm(GameType::class, $game, ['usercharacter' => $usercharacter]);
@@ -40,6 +45,10 @@ class GameController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($game);
             $entityManager->flush();
+
+            $userevent->setUsercharacter($usercharacter);
+            $gameEvent->setGame($game);
+            $dispatcher->dispatch(AppEvent::EndGame, $userevent);
 
             return $this->redirectToRoute('game_index');
         }
