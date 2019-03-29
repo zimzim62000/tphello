@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\UserCharacters;
+use App\Form\Type\CharactersFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -28,7 +29,7 @@ class UserCharactersType extends AbstractType
             ->add('favorite')
             ->add('defaultCharacter')
             ->add('user')
-            ->add('characters')
+            ->add('characters')//, CharactersFormType::class)
         ;
 
         $builder->addEventListener(
