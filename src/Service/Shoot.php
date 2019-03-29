@@ -34,12 +34,13 @@ class Shoot{
             }
             else if (rand(1,100) >= $miss){
                 $this->session->getFlashBag()->add('success', '-100 damages');
-                $game->setDamage(100);
+                $game = $game->getDamage() - 100 ;
+
                 $this->em->flush();
 
             }
             else if (rand(1,100) <= $kill) {
-                $game->setAssassination(1);
+                $game = $game->getAssassination() + 1 ;
                 $this->em->flush();
             }
         }
