@@ -23,11 +23,11 @@ class UserCharactersRepository extends ServiceEntityRepository
     //  * @return UserCharacters[] Returns an array of UserCharacters objects
     //  */
 
-    public function findByNotPlayed()
+    public function findByPlayedByUser($user)
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.user = :val')
-            ->setParameter('val', null)
+            ->setParameter('val', $user)
             ->orderBy('u.id', 'ASC')
             ->setMaxResults(20)
             ->getQuery()
