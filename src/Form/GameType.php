@@ -50,7 +50,9 @@ class GameType extends AbstractType
         if($game->getId() === null) {
             $form->add('submit', SubmitType::class, ['label_format' => 'Créer une partie ']);
         }
-        $form->add('submit', SubmitType::class, ['label_format' => 'Modifier la partie']);
+        else {
+            $form->add('submit', SubmitType::class, ['label_format' => 'Modifier la partie']);
+        }
 
         if ($this->userCharacter !== null) {
             $game->setUserCharacters($this->userCharacter)

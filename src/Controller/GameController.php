@@ -6,6 +6,7 @@ use App\Entity\Game;
 use App\Entity\UserCharacters;
 use App\Form\GameType;
 use App\Repository\GameRepository;
+use App\Security\AppAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,6 +66,7 @@ class GameController extends AbstractController
      */
     public function show(Game $game): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::GAME_SHOW, $game);
         return $this->render('game/show.html.twig', [
             'game' => $game,
         ]);
@@ -79,6 +81,7 @@ class GameController extends AbstractController
      */
     public function edit(Request $request, Game $game): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::GAME_EDIT, $game);
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
 
