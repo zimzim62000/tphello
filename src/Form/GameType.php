@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Game;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -21,6 +23,11 @@ class GameType extends AbstractType
             ->add('userCharacters')
             ->add('submit', SubmitType::class )
         ;
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            array($this, 'preSetData')
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -28,5 +35,17 @@ class GameType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Game::class,
         ]);
+    }
+
+    public function preSetData(FormEvent $event)
+    {
+        $form = $event->getForm();
+        $game = $event->getData();
+
+        if($game->getId() === null){
+            $form->add('submit', SubmitType::class, ['label_format' => 'Créer une partie']);
+        }else{
+            $form->add('submit', SubmitType::class, ['label_format' => 'Modifier la partie']);
+        }
     }
 }
