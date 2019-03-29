@@ -66,6 +66,9 @@
                     <a href="{{ path('game_new', {'id': user_character.id}) }}">Créer une partie</a>
                 </td>
             </tr>
+            <tr>
+                <td><img style="width:300px;height:300px;" src="{{ asset('/img/Characters/' ~ user_character.characters.photo) }}" /></td>
+            </tr>
         {% else %}
             <tr>
                 <td colspan="4">no records found</td>
