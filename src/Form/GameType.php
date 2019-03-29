@@ -12,8 +12,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class GameType extends AbstractType
 {
+    private $userCharacters;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->userCharacters = $options['userCharacters'];
         $builder
             ->add('createdAt')
             ->add('position')
@@ -37,12 +40,23 @@ class GameType extends AbstractType
         if ($game->getId() === null) {
             $form->remove('submit')->add('submit',SubmitType::class, ['label' => 'Créer une partie']);
         }
+        if($this->userCharacters ==! null)
+        {
+            $game->setUserCharacters($this->userCharacters);
+        }
+        $game->setCreatedAt(new \DateTime())
+            ->setReanimation(0)
+            ->setPosition(0)
+            ->setEndGame(false)
+            ->setDamage(0)
+            ->setAssassination(0);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Game::class,
+            'userCharacters' => null
         ]);
     }
 }
