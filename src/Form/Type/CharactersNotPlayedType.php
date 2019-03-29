@@ -35,6 +35,8 @@ class CharactersNotPlayedType extends AbstractType
         $userCharacters = $this->repository->findByPlayedByUser($this->tokenStorage->getToken()->getUser());
         $all = $this->charactersRepository->findAll();
 
+        $played = array();
+
         foreach ($userCharacters as $userCharacter){
             $played[] = $userCharacter->getCharacter;
         }
