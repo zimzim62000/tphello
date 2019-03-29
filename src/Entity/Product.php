@@ -36,6 +36,23 @@ class Product
      */
     private $quantity;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $image;
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,5 +104,11 @@ class Product
         $this->quantity = $quantity;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->getName();
     }
 }
