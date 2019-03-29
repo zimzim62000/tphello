@@ -7,7 +7,7 @@
 
     {% for message in app.flashes('success') %}
         <div class="callout success">
-            <h6 class="text-center">{{ message }}</h6>
+            <h2 class="text-center" style="color: #2ca02c;">{{ message }}</h2>
         </div>
     {% endfor %}
 {% endblock message %}

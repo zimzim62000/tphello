@@ -14,7 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @Route("/game")
@@ -109,12 +111,16 @@ class GameController extends AbstractController
     /**
      * @Route("/{id}/shoot", name="game_shoot", methods={"GET","POST"})
      */
-    public function shoot(Request $request, Game $game, LetsShoot $letsShoot): Response
+    public function shoot(Request $request, Game $game, LetsShoot $letsShoot, TranslatorInterface $translator, SessionInterface $session): Response
     {
         $game = $letsShoot->shoot($game, rand(1, 10));
         $em = $this->getDoctrine()->getManager();
         $em->persist($game);
         $em->flush();
+
+        $session->set('_locale', 'en');
+        $this->addFlash('success', $translator->trans('shoot.callback'));
+
         return $this->redirectToRoute('user_characters_index');
     }
 
