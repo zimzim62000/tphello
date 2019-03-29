@@ -7,14 +7,14 @@ use App\Entity\Game;
 class ShootService
 {
 
-    public function shoot(Game $attacker, Game $target)
+    public function shoot(Game $attacker, Game $target, $randKill = [0,4], $randDMG = [0,1])
     {
-        if (1 === rand(0, 4)) {
+        if (1 === rand($randKill[0], $randKill[1])) {
             //une chance sur deux de le kill
             $this->shootKill($target,$attacker);
         }
 
-        if (1 === rand(0, 1)) {
+        if (1 === rand($randDMG[0], $randDMG[1])) {
             //une chance sur deux de faire 100dmg
             $this->shootDMG($target, 100);
         }
