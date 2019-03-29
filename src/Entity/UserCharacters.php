@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints as AssertTwice;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserCharactersRepository")
+ * @AssertTwice\ConstraintsTwiceUserCharacter
  */
 class UserCharacters
 {
@@ -16,7 +19,20 @@ class UserCharacters
      */
     private $id;
 
-    /**
+    /**<th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for character in characters %}
+            <tr>
+                <td>{{ character.id }}</td>
+                <td>{{ character.name }}</td>
+                <td>
+                    <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
+                    <a href="{{ path('characters_edit', {'id': character.id}) }}">edit</a>
+                </td>
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
