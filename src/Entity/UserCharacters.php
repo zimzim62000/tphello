@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserCharactersRepository")
+ * @Assert\ContraintUserCharacter
  */
 class UserCharacters
 {

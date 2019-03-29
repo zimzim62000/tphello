@@ -22,19 +22,35 @@ class UserCharactersRepository extends ServiceEntityRepository
     // /**
     //  * @return UserCharacters[] Returns an array of UserCharacters objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByPlayedByUser($user)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('u.user = :val')
+            ->setParameter('val', $user)
             ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(20)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
+    // /**
+    //  * @return UserCharacters[] Returns an array of UserCharacters objects
+    //  */
+
+    public function findByActive()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.defeult = :val')
+            ->setParameter('val', true)
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(2)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 
     /*
     public function findOneBySomeField($value): ?UserCharacters

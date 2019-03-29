@@ -22,6 +22,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class UserController extends AbstractController
 {
+
     /**
      * @Route("/", name="user_index", methods="GET")
      */
