@@ -47,6 +47,8 @@
                 <th>user</th>
                 <th>CreatedAt</th>
                 <th>Favorite</th>
+                <th>Nom</th>
+                <th>Role</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -57,6 +59,8 @@
                 <td>{{ user_character.user.username }}</td>
                 <td>{{ user_character.createdAt ? user_character.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ user_character.favorite ? 'Yes' : 'No' }}</td>
+                <td>{{ user_character.characters.name }}</td>
+                <td>{{ user_character.characters.role.name }}</td>
                 <td>
                     <a href="{{ path('user_characters_show', {'id': user_character.id}) }}">show</a>
                     <a href="{{ path('user_characters_edit', {'id': user_character.id}) }}">edit</a>
