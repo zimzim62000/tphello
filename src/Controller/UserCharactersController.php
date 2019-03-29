@@ -31,12 +31,12 @@ class UserCharactersController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="user_characters_new", methods={"GET","POST"})
+     * @Route("/new/{userCharacter}", name="user_characters_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserCharacters $userCharacter = null): Response
     {
         $userCharacter = new UserCharacters();
-        $form = $this->createForm(UserCharactersType::class, $userCharacter);
+        $form = $this->createForm(UserCharactersType::class, $userCharacter, ['usercharacter'=>$userCharacter]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
