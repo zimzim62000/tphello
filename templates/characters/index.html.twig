@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>picture</th>
                 <th>Name</th>
                 <th>actions</th>
             </tr>
@@ -17,6 +18,10 @@
         {% for character in characters %}
             <tr>
                 <td>{{ character.id }}</td>
+                <td>{% if character.picture is not empty %}
+                    <img src="{{ asset('uploads/characters/' ~ character.picture) }}" />
+                    {% endif %}
+                </td>
                 <td>{{ character.name }}</td>
                 <td>
                     <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>

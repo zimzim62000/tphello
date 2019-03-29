@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Characters;
 use App\Form\CharactersType;
 use App\Repository\CharactersRepository;
+use App\Service\CharacterImageUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,13 +32,14 @@ class CharactersController extends AbstractController
     /**
      * @Route("/new", name="characters_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, CharacterImageUploader $characterImageUploader): Response
     {
         $character = new Characters();
         $form = $this->createForm(CharactersType::class, $character);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $characterImageUploader->upload($character);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($character);
             $entityManager->flush();
@@ -64,12 +66,13 @@ class CharactersController extends AbstractController
     /**
      * @Route("/{id}/edit", name="characters_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Characters $character): Response
+    public function edit(Request $request, Characters $character, CharacterImageUploader $characterImageUploader): Response
     {
         $form = $this->createForm(CharactersType::class, $character);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $characterImageUploader->upload($character);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('characters_index', [

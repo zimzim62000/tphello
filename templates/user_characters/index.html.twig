@@ -10,6 +10,7 @@
         <thead>
         <tr>
             <th>Id</th>
+            <th>Picture</th>
             <th>Name</th>
             <th>Role</th>
             <th>actions</th>
@@ -19,6 +20,10 @@
         {% for character in characters %}
             <tr>
                 <td>{{ character.id }}</td>
+                <td>{% if character.picture is not empty %}
+                        <img src="{{ asset('uploads/characters/' ~ character.picture) }}" />
+                    {% endif %}
+                </td>
                 <td>{{ character.name }}</td>
                 <td>{{ character.role.name }}</td>
                 <td>
