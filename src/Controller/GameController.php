@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\UserCharacters;
+use App\Event\AppEvent;
+use App\Event\GameEvent;
 use App\Form\GameType;
 use App\Repository\GameRepository;
 use App\Security\AppAccess;
 use App\Service\LetsShoot;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -112,6 +115,17 @@ class GameController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($game);
         $em->flush();
+        return $this->redirectToRoute('user_characters_index');
+    }
+
+    /**
+     * @Route("/{id}/endgame", name="game_endgame", methods={"GET","POST"})
+     */
+    public function endgame(Request $request, Game $game, GameEvent $event, EventDispatcherInterface $dispatcher): Response
+    {
+        $event->setGame($game);
+        $dispatcher->dispatch(AppEvent::GameEnd, $event);
+
         return $this->redirectToRoute('user_characters_index');
     }
 }

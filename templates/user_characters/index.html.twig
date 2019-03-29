@@ -95,6 +95,7 @@
             <th>Assassination</th>
             <th>Reanimation</th>
             <th>Damage</th>
+            <th>Charac</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -107,11 +108,12 @@
                 <td>{{ game.assassination }}</td>
                 <td>{{ game.reanimation }}</td>
                 <td>{{ game.damage }}</td>
+                <td>{{ game.userCharacters }}</td>
                 <td>
                     <a href="{{ path('game_show', {'id': game.id}) }}">show</a>
                     <a href="{{ path('game_edit', {'id': game.id}) }}">edit</a>
                     <a href="{{ path('game_shoot', {'id': game.id}) }}">Shoot at ennemies</a>
-                    <a href="#">@Hackme - End game</a>
+                    <a href="{{ path('game_endgame', {'id': game.id}) }}">End game</a>
                 </td>
             </tr>
         {% else %}
