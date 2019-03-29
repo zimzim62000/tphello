@@ -6,6 +6,8 @@ use App\Entity\Game;
 use App\Entity\UserCharacters;
 use App\Form\GameType;
 use App\Repository\GameRepository;
+use App\Security\AppAccess;
+use App\Service\LetsShoot;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,6 +56,8 @@ class GameController extends AbstractController
      */
     public function show(Game $game): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::GAME_METHODS, $game);
+
         return $this->render('game/show.html.twig', [
             'game' => $game,
         ]);
@@ -64,6 +68,8 @@ class GameController extends AbstractController
      */
     public function edit(Request $request, Game $game): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::GAME_METHODS, $game);
+
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
 
@@ -86,6 +92,8 @@ class GameController extends AbstractController
      */
     public function delete(Request $request, Game $game): Response
     {
+        $this->denyAccessUnlessGranted(AppAccess::GAME_METHODS, $game);
+
         if ($this->isCsrfTokenValid('delete'.$game->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($game);
@@ -93,5 +101,14 @@ class GameController extends AbstractController
         }
 
         return $this->redirectToRoute('game_index');
+    }
+
+    /**
+     * @Route("/{id}/shoot", name="game_shoot", methods={"GET","POST"})
+     */
+    public function shoot(Request $request, Game $game, LetsShoot $letsShoot): Response
+    {
+        $letsShoot->shoot($game);
+        return $this->redirectToRoute('user_characters_index');
     }
 }
