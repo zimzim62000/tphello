@@ -11,16 +11,14 @@ namespace App\Service;
 
 use App\Entity\Game;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Runner\Exception;
 
 class LetsShoot
 {
-    private $em;
-    public function __construct(EntityManagerInterface $entityManager){
-        $this->em = $entityManager;
-    }
-
-    public function shoot(Game $game){
-        $maChance = rand(1, 10);
+    public function shoot($game, $maChance = null){
+        if(!$game instanceof Game){
+            throw new Exception("Parametre non Game");
+        }
         switch ($maChance){
             case 1:
             case 2:
@@ -38,7 +36,6 @@ class LetsShoot
                 break;
         }
 
-        $this->em->persist($game);
-        $this->em->flush();
+        return $game;
     }
 }

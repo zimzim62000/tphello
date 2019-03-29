@@ -108,7 +108,10 @@ class GameController extends AbstractController
      */
     public function shoot(Request $request, Game $game, LetsShoot $letsShoot): Response
     {
-        $letsShoot->shoot($game);
+        $game = $letsShoot->shoot($game, rand(1, 10));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($game);
+        $em->flush();
         return $this->redirectToRoute('user_characters_index');
     }
 }
