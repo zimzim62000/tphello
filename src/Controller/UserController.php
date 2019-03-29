@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Event\AppEvent;
-use App\Event\UserEvent;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +13,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @Route("/user")
@@ -33,16 +30,27 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods="GET|POST")
      */
-    public function new(Request $request, UserEvent $event, EventDispatcherInterface $dispatcher): Response
+    public function new(Request $request, UserPasswordEncoderInterface $encoder, TokenStorageInterface $tokenStorage): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $mdp = $encoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($mdp);
 
-            $event->setUser($user);
-            $dispatcher->dispatch('user.create', $event);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            /**
+             * For register User directly
+             * */
+            $tokenStorage->setToken(
+                new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles())
+            );
 
             return $this->redirectToRoute('user_index');
         }
@@ -64,15 +72,19 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods="GET|POST")
      */
-    public function edit(Request $request, User $user, UserEvent $event, EventDispatcherInterface $dispatcher): Response
+    public function edit(Request $request, User $user, UserPasswordEncoderInterface $encoder): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $event->setUser($user);
-            $dispatcher->dispatch(AppEvent::UserEdit, $event);
+            if($user->getPlainPassword() !== ''){
+                $mdp = $encoder->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($mdp);
+            }
+
+            $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_index', ['id' => $user->getId()]);
         }

@@ -12,6 +12,7 @@ security:
     role_hierarchy:
         ROLE_USER: ROLE_USER
         ROLE_ADMIN: [ROLE_ADMIN, ROLE_USER ]
+        ROLE_SUPER_ADMIN: [ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER]
 
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -35,6 +36,7 @@ security:
                 authenticators:
                    - App\Security\LoginFormAuthenticator
             #provider: app_user_provider
+
             #form_login:
             #    login_path: login
             #    check_path: login
@@ -47,5 +49,8 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_USER }
+        #- { path: ^/user/[0-9]/show, roles: ROLE_USER }
+        #- { path: ^/user, roles: ROLE_ADMIN }
         #- { path: ^/user, roles: ROLE_USER }
+        - { path: ^/item, roles: ROLE_USER }
+        - { path: ^/itemtype, roles: ROLE_ADMIN }

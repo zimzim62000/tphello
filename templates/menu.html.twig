@@ -1,10 +1,12 @@
 {% block menu %}
     <a href="{{ path('home_index') }}">Home</a>
     <a href="{{ path('user_index') }}">User</a>
+    <a href="{{ path('item_index') }}">Item</a>
+    <a href="{{ path('item_type_index') }}">Item type</a>
 
     {% if is_granted('ROLE_USER') %}
         <a href="{{ path('app_logout') }}">Deconnexion</a>
     {% else %}
-        <a href="{{ path('app_login') }}">Connexion</a>
+        <a href="{{ path('app_login') }}">Connexon</a>
     {% endif %}
 {% endblock %}

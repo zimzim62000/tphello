@@ -19,16 +19,6 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $firstName;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $lastName;
-
-    /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -47,17 +37,12 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $enabled = false;
+    private $enabled;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $positionX =0;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $positionY =0;
+    private $maxWeight = 0;
 
     /**
      * @var string The hashed password
@@ -175,78 +160,19 @@ class User implements UserInterface
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getFirstName()
+    public function getMaxWeight(): int
     {
-        return $this->firstName;
+        return $this->maxWeight;
     }
 
     /**
-     * @param mixed $firstName
+     * @param int $maxWeight
      */
-    public function setFirstName($firstName)
+    public function setMaxWeight($maxWeight): self
     {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * @param mixed $lastName
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function __toString()
-    {
-       return $this->email;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPositionX()
-    {
-        return $this->positionX;
-    }
-
-    /**
-     * @param mixed $positionX
-     */
-    public function setPositionX(int $positionX)
-    {
-        $this->positionX = $positionX;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPositionY()
-    {
-        return $this->positionY;
-    }
-
-    /**
-     * @param mixed $positionY
-     */
-    public function setPositionY(int $positionY)
-    {
-        $this->positionY = $positionY;
+        $this->maxWeight = $maxWeight;
 
         return $this;
     }
