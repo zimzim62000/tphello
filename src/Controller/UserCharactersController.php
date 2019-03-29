@@ -26,17 +26,17 @@ class UserCharactersController extends AbstractController
         return $this->render('user_characters/index.html.twig', [
             'games' => $gameRepository->findAll(),
             'user_characters' => $userCharactersRepository->findAll(),
-            'characters' => $charactersRepository->findAll()
+            'characters' => $charactersRepository->findBy([],['role'=>'ASC','name'=>'ASC'])
         ]);
     }
 
     /**
-     * @Route("/new", name="user_characters_new", methods={"GET","POST"})
+     * @Route("/new/{userCharacter}", name="user_characters_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserCharacters $userCharacter = null): Response
     {
         $userCharacter = new UserCharacters();
-        $form = $this->createForm(UserCharactersType::class, $userCharacter);
+        $form = $this->createForm(UserCharactersType::class, $userCharacter, ['usercharacter'=>$userCharacter]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

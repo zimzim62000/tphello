@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Entity\UserCharacters;
 use App\Form\GameType;
 use App\Repository\GameRepository;
+use App\Repository\UserCharactersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,12 +28,16 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="game_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="game_new", methods={"GET","POST"}, defaults={"id"=null})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserCharactersRepository $userCharactersRepository, $id=null): Response
     {
         $game = new Game();
-        $form = $this->createForm(GameType::class, $game);
+
+        $userCharacter = $userCharactersRepository->findBy(['id'=>$id]);
+        echo json_encode($userCharacter);
+
+        $form = $this->createForm(GameType::class, $game, ['game'=>$game,'label' => 'Créer une partie']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +69,7 @@ class GameController extends AbstractController
      */
     public function edit(Request $request, Game $game): Response
     {
-        $form = $this->createForm(GameType::class, $game);
+        $form = $this->createForm(GameType::class, $game,['label' => 'Modifier la partie']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -15,6 +15,10 @@
                 <th>Name</th>
                 <td>{{ character.name }}</td>
             </tr>
+            <tr>
+                <th>Image</th>
+                <td><img width="200px" src="{{ asset('uploads/images/' ~ character.image)}}"/></td>
+            </tr>
         </tbody>
     </table>
 
