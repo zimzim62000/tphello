@@ -53,19 +53,17 @@
         </thead>
         <tbody>
         {% for user_character in user_characters %}
-            <tr>
-                <td>{{ user_character.id }}</td>
-                <td>{{ user_character.user.username }}</td>
-                <td>{{ user_character.createdAt ? user_character.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ user_character.favorite ? 'Yes' : 'No' }}</td>
-                <td>
-                    {% if is_granted('ROLE_ADMIN') %}
+                <tr>
+                    <td>{{ user_character.id }}</td>
+                    <td>{{ user_character.user.username }}</td>
+                    <td>{{ user_character.createdAt ? user_character.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ user_character.favorite ? 'Yes' : 'No' }}</td>
+                    <td>
                         <a href="{{ path('user_characters_show', {'id': user_character.id}) }}">show</a>
                         <a href="{{ path('user_characters_edit', {'id': user_character.id}) }}">edit</a>
-                    {% endif %}
-                    <a href="{{ path('game_new', {'id': user_character.id}) }}">Créer une partie</a>
-                </td>
-            </tr>
+                        <a href="{{ path('game_new', {'id': user_character.id}) }}">Créer une partie</a>
+                    </td>
+                </tr>
         {% else %}
             <tr>
                 <td colspan="4">no records found</td>
