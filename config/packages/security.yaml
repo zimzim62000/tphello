@@ -50,5 +50,7 @@ security:
         - { path: ^/user-characters, roles: ROLE_USER }
         - { path: ^/game, roles: ROLE_USER }
         - { path: ^/characters, roles: ROLE_ADMIN}
+        - { path: ^/user, roles: ROLE_ADMIN}
+        - { path: ^/role, roles: ROLE_ADMIN}
         - { path: ^/, roles: ROLE_USER }
         #- { path: ^/user, roles: ROLE_USER }
