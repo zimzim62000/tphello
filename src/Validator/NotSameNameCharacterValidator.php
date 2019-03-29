@@ -11,6 +11,7 @@ namespace App\Validator;
 use App\Entity\Characters;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class NotSameNameCharacterValidator extends ConstraintValidator
