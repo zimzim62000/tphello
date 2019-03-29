@@ -12,9 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/user-characters")
+ *
+ * @IsGranted("ROLE_USER")
  */
 class UserCharactersController extends AbstractController
 {
@@ -25,8 +28,8 @@ class UserCharactersController extends AbstractController
     {
         return $this->render('user_characters/index.html.twig', [
             'games' => $gameRepository->findAll(),
-            'user_characters' => $userCharactersRepository->findAll(),
-            'characters' => $charactersRepository->findAll()
+            'user_characters' => $userCharactersRepository->findBy(['user' => $this->getUser()]),
+            'characters' => $charactersRepository->findBy([], ['role' => 'ASC', 'name' => 'ASC'])
         ]);
     }
 

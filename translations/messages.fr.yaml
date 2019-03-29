@@ -5,3 +5,8 @@ admin:
 game:
     new:
         choiceopponent: "Quel adversaire pour %team% , à vous de choisir ?"
+
+shoot:
+    killed: "tu l'as tué"
+    touched: "tu lui a retiré %dmg%"
+    notouched: "gros noob"
