@@ -47,6 +47,8 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Character Name</th>
+                <th>Character Role</th>
                 <th>user</th>
                 <th>CreatedAt</th>
                 <th>Favorite</th>
@@ -57,6 +59,8 @@
         {% for user_character in user_characters %}
             <tr>
                 <td>{{ user_character.id }}</td>
+                <td>{{ user_character.characters.name }}</td>
+                <td>{{ user_character.characters.role.name }}</td>
                 <td>{{ user_character.user.username }}</td>
                 <td>{{ user_character.createdAt ? user_character.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ user_character.favorite ? 'Yes' : 'No' }}</td>
