@@ -29,7 +29,11 @@ class UserCharactersController extends AbstractController
         return $this->render('user_characters/index.html.twig', [
             'games' => $gameRepository->findAll(),
             'user_characters' => $userCharacters,
-            'characters' => $charactersRepository->findAll()
+            'characters' => $charactersRepository->createQueryBuilder('c')
+				->addOrderBy('c.role', 'ASC')
+				->addOrderBy('c.name', 'ASC')
+				->getQuery()
+				->execute()
         ]);
     }
 
