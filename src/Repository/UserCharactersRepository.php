@@ -35,6 +35,22 @@ class UserCharactersRepository extends ServiceEntityRepository
         ;
     }
 
+    // /**
+    //  * @return UserCharacters[] Returns an array of UserCharacters objects
+    //  */
+
+    public function findByActive()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.defeult = :val')
+            ->setParameter('val', true)
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(2)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 
     /*
     public function findOneBySomeField($value): ?UserCharacters

@@ -14,6 +14,9 @@ use App\Entity\UserCharacters;
 
 class ShootService
 {
+    /*
+     * Cette fonction renvoie 0 pour raté, 1 pour touché et 2 pour mort
+     */
     function Shoot() {
 
         $chance = rand(0,99);
@@ -22,7 +25,7 @@ class ShootService
             return 2;
         }
         if($chance < 70){
-            return 100;
+            return 1;
         }
         return 0;
 
