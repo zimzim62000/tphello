@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints as CustomContraints;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CharactersRepository")
@@ -20,8 +21,9 @@ class Characters
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
-    private $name;
+    private $name;//@CustomContraints\SameNameCharacter
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Role")
