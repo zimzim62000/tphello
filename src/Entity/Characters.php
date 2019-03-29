@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as NotSameAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CharactersRepository")
+ *
+ * @NotSameAssert\NotSameNameCharacter
  */
 class Characters
 {
