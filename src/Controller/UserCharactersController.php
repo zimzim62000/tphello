@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Characters;
+use App\Entity\User;
 use App\Entity\UserCharacters;
 use App\Form\UserCharactersType;
 use App\Repository\CharactersRepository;
@@ -26,7 +27,7 @@ class UserCharactersController extends AbstractController
         return $this->render('user_characters/index.html.twig', [
             'games' => $gameRepository->findAll(),
             'user_characters' => $userCharactersRepository->findAll(),
-            'characters' => $charactersRepository->findAll()
+            'characters' => $charactersRepository->findASC(),
         ]);
     }
 

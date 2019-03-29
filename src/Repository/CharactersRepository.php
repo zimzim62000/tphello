@@ -19,6 +19,14 @@ class CharactersRepository extends ServiceEntityRepository
         parent::__construct($registry, Characters::class);
     }
 
+    public function findASC() {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.role','ASC')
+            ->orderBy('u.name','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Characters[] Returns an array of Characters objects
     //  */
