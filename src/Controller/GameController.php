@@ -7,6 +7,7 @@ use App\Entity\UserCharacters;
 use App\Form\GameType;
 use App\Repository\GameRepository;
 use App\Security\AppAccess;
+use App\Service\Shoot;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -115,5 +116,15 @@ class GameController extends AbstractController
         }
 
         return $this->redirectToRoute('game_index');
+    }
+
+    /**
+     * @Route("/shoot/{id}", name="game_shoot", methods="GET")
+     */
+    public function shoot(Game $game, Shoot $shoot): Response
+    {
+        $shoot->shoot($game);
+
+        return $this->redirectToRoute('user_characters_index');
     }
 }
