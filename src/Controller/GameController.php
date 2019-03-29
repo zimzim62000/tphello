@@ -31,6 +31,7 @@ class GameController extends AbstractController
      */
     public function new(Request $request, UserCharacters $id=null): Response
     {
+        $this->denyAccessUnlessGranted('gameNew');
         $game = new Game();
         $form = $this->createForm(GameType::class, $game, ['type' => "new", "id" => $id]);
         $form->handleRequest($request);
@@ -54,6 +55,7 @@ class GameController extends AbstractController
      */
     public function show(Game $game): Response
     {
+        $this->denyAccessUnlessGranted('gameShow', $game);
         return $this->render('game/show.html.twig', [
             'game' => $game,
         ]);
@@ -64,6 +66,7 @@ class GameController extends AbstractController
      */
     public function edit(Request $request, Game $game): Response
     {
+        $this->denyAccessUnlessGranted('gameEdit', $game);
         $form = $this->createForm(GameType::class, $game, ["type" => "edit"]);
         $form->handleRequest($request);
 
@@ -86,6 +89,7 @@ class GameController extends AbstractController
      */
     public function delete(Request $request, Game $game): Response
     {
+        $this->denyAccessUnlessGranted('gameDelete', $game);
         if ($this->isCsrfTokenValid('delete'.$game->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($game);

@@ -17,7 +17,7 @@ class UserCharactersType extends AbstractType
     private $securityChecker;
     private $token;
 
-    public function __construct(AuthorizationCheckerInterface $securityChecker, TokenStorageInterface $token)
+        public function __construct(AuthorizationCheckerInterface $securityChecker, TokenStorageInterface $token)
     {
         $this->securityChecker = $securityChecker;
         $this->token = $token;
