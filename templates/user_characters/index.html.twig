@@ -11,6 +11,8 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
+            <th>Role</th>
+            <thh>Image</thh>
             <th>actions</th>
         </tr>
         </thead>
@@ -19,9 +21,17 @@
             <tr>
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
+                <td>{{ character.role }}</td>
+
+                {% if character.image is defined %}
+                    <td><img src="{{ base_url }}{{ character.getPathPicture }}"></td>
+                {% endif %}
+
                 <td>
-                    <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
-                    <a href="{{ path('characters_edit', {'id': character.id}) }}">edit</a>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
+                        <a href="{{ path('characters_edit', {'id': character.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -42,6 +52,8 @@
                 <th>user</th>
                 <th>CreatedAt</th>
                 <th>Favorite</th>
+                <th>Name</th>
+                <th>Role</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -52,6 +64,9 @@
                 <td>{{ user_character.user.username }}</td>
                 <td>{{ user_character.createdAt ? user_character.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ user_character.favorite ? 'Yes' : 'No' }}</td>
+                <td>{{ user_character.getCharacters.name }}</td>
+                <td>{{ user_character.getCharacters.role }}</td>
+                <td></td>
                 <td>
                     <a href="{{ path('user_characters_show', {'id': user_character.id}) }}">show</a>
                     <a href="{{ path('user_characters_edit', {'id': user_character.id}) }}">edit</a>
@@ -96,7 +111,7 @@
                 <td>
                     <a href="{{ path('game_show', {'id': game.id}) }}">show</a>
                     <a href="{{ path('game_edit', {'id': game.id}) }}">edit</a>
-                    <a href="#">@Hackme - Shoot</a>
+                    <a href="{{ path('game_shoot', {'id': game.id}) }}">@Hackme - Shoot</a>
                     <a href="#">@Hackme - End game</a>
                 </td>
             </tr>
