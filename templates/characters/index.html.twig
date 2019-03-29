@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Image</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -18,6 +19,11 @@
             <tr>
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
+                <td>
+                    {% if character.image %}
+                        <img src="{{ asset('image/'~character.image) }}">
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
                     <a href="{{ path('characters_edit', {'id': character.id}) }}">edit</a>

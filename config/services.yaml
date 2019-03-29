@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'fr'
+    image_character_directory: '%kernel.project_dir%/public/image'
+
 
 
 services:
@@ -44,3 +46,8 @@ services:
     App\EventListener\LoginListener:
         tags:
             - { name: kernel.event_listener, event: user.create, priority: 0 }
+
+
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%image_character_directory%'
