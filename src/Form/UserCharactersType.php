@@ -14,7 +14,7 @@ class UserCharactersType extends AbstractType
         $builder
             ->add('createdAt')
             ->add('favorite')
-            ->add('default')
+            ->add('defaultCharacter')
             ->add('user')
             ->add('characters')
         ;
