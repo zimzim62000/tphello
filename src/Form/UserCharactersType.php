@@ -2,7 +2,11 @@
 
 namespace App\Form;
 
+use App\Form\Type\CharactersType;
 use App\Entity\UserCharacters;
+use App\Repository\CharactersRepository;
+use App\Repository\UserCharactersRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -15,11 +19,15 @@ class UserCharactersType extends AbstractType
 {
     private $securityChecker;
     private $token;
+    private $em;
 
-    public function __construct(AuthorizationCheckerInterface $securityChecker, TokenStorageInterface $token)
+
+    public function __construct(AuthorizationCheckerInterface $securityChecker, TokenStorageInterface $token, EntityManagerInterface $em)
     {
         $this->securityChecker = $securityChecker;
         $this->token = $token;
+        $this->em = $em;
+
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -29,7 +37,7 @@ class UserCharactersType extends AbstractType
             ->add('favorite')
             ->add('defaultCharacter')
             ->add('user')
-            ->add('characters')
+            ->add('characters', CharactersType::class)
         ;
 
         $builder->addEventListener(
@@ -51,6 +59,7 @@ class UserCharactersType extends AbstractType
         $form = $event->getForm();
         $userCharacters = $event->getData();
 
+
         if($this->securityChecker->isGranted('ROLE_USER') === true && $this->securityChecker->isGranted('ROLE_ADMIN') === false){
             $userCharacters->setUser($this->token->getToken()->getUser());
             $userCharacters->setDefaultCharacter(false);
@@ -62,6 +71,17 @@ class UserCharactersType extends AbstractType
             $form->remove('favorite');
             $form->remove('createdAt');
         }
+
+
+        /*
+        $form->add('characters', CharactersType::class, [
+            'query_builder' => function (CharactersRepository $charactersRepository) {
+                return $charactersRepository->createQueryBuilder('character')
+                    ->where('character.id in :ids')
+                    ->setParameter('ids', $this->ids);// merci PHP7
+            },
+        ]);
+        */
     }
 }
 
