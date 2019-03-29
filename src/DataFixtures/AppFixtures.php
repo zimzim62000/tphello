@@ -71,46 +71,55 @@ class AppFixtures extends Fixture {
 
         $bang = new Characters();
         $bang->setName('Bangalore');
+        $bang->setImage('none.png');
         $bang->setRole($assault);
         $manager->persist($bang);
 
         $blood = new Characters();
         $blood->setName('Bloodhound');
+        $blood->setImage('none.png');
         $blood->setRole($scout);
         $manager->persist($blood);
 
         $caustic = new Characters();
         $caustic->setName('Caustic');
+        $caustic->setImage('none.png');
         $caustic->setRole($support);
         $manager->persist($caustic);
 
         $gibra = new Characters();
         $gibra->setName('Gibraltar');
+        $gibra->setImage('none.png');
         $gibra->setRole($support);
         $manager->persist($gibra);
 
         $lifeline = new Characters();
         $lifeline->setName('Lifeline');
+        $lifeline->setImage('none.png');
         $lifeline->setRole($medic);
         $manager->persist($lifeline);
 
         $mirage = new Characters();
         $mirage->setName('Mirage');
+        $mirage->setImage('none.png');
         $mirage->setRole($assault);
         $manager->persist($mirage);
 
         $path = new Characters();
         $path->setName('Pathfinder');
+        $path->setImage('none.png');
         $path->setRole($medic);
         $manager->persist($path);
 
         $wraith = new Characters();
         $wraith->setName('Wraith');
+        $wraith->setImage('none.png');
         $wraith->setRole($assault);
         $manager->persist($wraith);
 
         $octane = new Characters();
         $octane->setName('Octane');
+        $octane->setImage('none.png');
         $octane->setRole($assault);
         $manager->persist($octane);
 
