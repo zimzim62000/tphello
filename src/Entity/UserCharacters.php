@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator\Constraints as AcmeAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserCharactersRepository")
@@ -41,6 +42,7 @@ class UserCharacters
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Characters")
      * @ORM\JoinColumn(nullable=false)
+     * @AcmeAssert\ContainsSameUserCharacter
      */
     private $characters;
 
