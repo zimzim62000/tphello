@@ -112,6 +112,7 @@ class UserCharacters
 
     public function __toString()
     {
+
         return $this->user->getUsername().' - '.$this->characters;
     }
 }

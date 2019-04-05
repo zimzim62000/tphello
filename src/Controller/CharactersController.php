@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Upload\FileItemTypeUpload;
 
 /**
  * @Route("/characters")
@@ -28,13 +29,14 @@ class CharactersController extends AbstractController
     /**
      * @Route("/new", name="characters_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileItemTypeUpload $fileItemTypeUpload): Response
     {
         $character = new Characters();
         $form = $this->createForm(CharactersType::class, $character);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $fileItemTypeUpload->upload($character);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($character);
             $entityManager->flush();
@@ -61,12 +63,13 @@ class CharactersController extends AbstractController
     /**
      * @Route("/{id}/edit", name="characters_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Characters $character): Response
+    public function edit(Request $request, Characters $character, FileItemTypeUpload $fileItemTypeUpload): Response
     {
         $form = $this->createForm(CharactersType::class, $character);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $fileItemTypeUpload->upload($character);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('characters_index', [
