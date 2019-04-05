@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+
+<?php
+
+echo "\033[34mRunning tests..\r\n";
+exec('./bin/phpunit', $output, $returnCode);
+
+if ($returnCode !== 0) {
+  // Show full output
+  echo PHP_EOL . implode($output, PHP_EOL) . PHP_EOL;
+  echo PHP_EOL;
+  echo "\033[31mHouston on a un probleme... " . PHP_EOL . "\033[41m\033[33m quelqu'un m'entends ?" . PHP_EOL . "\033[0m domage ...." . PHP_EOL;
+  exit(1);
+}
+
+// Show summary (last line)
+echo array_pop($output) . PHP_EOL;
+
+echo PHP_EOL;
+echo PHP_EOL;
+echo "\033[32mTest Reussit... GG \033[42m\033[30mAuthorisation granted\033[40m\033[32m - Tu peux push :)" . PHP_EOL . "\033[0m";
+
+exit(0);
